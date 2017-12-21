@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "326152514646",
+    "firebase_url": "https://anonytweet-909b0.firebaseio.com",
+    "project_id": "anonytweet-909b0",
+    "storage_bucket": "anonytweet-909b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326152514646:android:f852c4ad3d08d67d",
+        "android_client_info": {
+          "package_name": "com.ayush.anonytweet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "326152514646-hg0uc33cqvgpuuggiot47ruc3179lhrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayush.anonytweet",
+            "certificate_hash": "fdb857061a27cd64a1c8c389f2f25980e7cfb31d"
+          }
+        },
+        {
+          "client_id": "326152514646-8r8lbctkv1grb8l0di8qu6r26831sbpn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw7Pph-t8Mu_BVZ_50SnAzZ69z1InTpE8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "326152514646-8r8lbctkv1grb8l0di8qu6r26831sbpn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

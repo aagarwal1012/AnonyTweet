@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="@dimen/md_keylines"
+    android:layout_marginLeft="@dimen/md_keylines"
+    android:layout_marginRight="@dimen/md_keylines"
+    android:foreground="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/card_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_image_height"
+            android:adjustViewBounds="false"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/a" />
+
+
+        <TextView
+            android:id="@+id/card_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_image"
+            android:layout_margin="16dp"
+            tools:text="@string/item_desc"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/article_subheading" />
+
+        <TextView
+            android:id="@+id/like_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_text"
+            android:layout_marginLeft="@dimen/md_keylines"
+            android:layout_marginTop="@dimen/md_keylines"
+            android:layout_marginRight="@dimen/md_keylines"
+            android:layout_marginBottom="@dimen/md_keylines"
+            android:ellipsize="end"
+            android:textSize="18dp"
+            android:text="No of Likes"
+            android:textColor="@color/com_facebook_button_background_color" />
+
+        <com.like.LikeButton
+            android:id="@+id/thumb_button"
+            android:layout_width="@dimen/cards_button_width"
+            android:layout_height="@dimen/cards_button_height"
+            app:circle_end_color="@android:color/holo_blue_dark"
+            app:circle_start_color="@android:color/holo_blue_bright"
+            app:dots_primary_color="@android:color/holo_blue_light"
+            app:dots_secondary_color="@android:color/holo_blue_dark"
+            app:icon_size="25dp"
+            android:layout_below="@+id/card_text"
+            android:layout_alignParentRight="true"
+            app:like_drawable="@drawable/thumb_on"
+            app:unlike_drawable="@drawable/thumb_off" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
