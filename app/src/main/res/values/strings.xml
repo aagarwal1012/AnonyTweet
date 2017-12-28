@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AnonyTweet</string>
     <string name="action_logout">LogOut</string>
+    <string name="action_refresh">Refresh</string>
     <string name="action_changePass">Change Password</string>
     <string name="item_title">Palais Garnier</string>
     <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for

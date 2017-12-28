@@ -1,16 +1,11 @@
 package com.ayush.anonytweet;
 
-import android.app.ActivityManager;
-import android.app.FragmentManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Bundle;;
+import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,9 +45,9 @@ public class DashBoard extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private FirebaseAuth auth;
 
-    //private ListView list_data;
     private ProgressBar circular_progress;
     RecyclerView recycle;
+    SwipeRefreshLayout refreshLayout;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -68,8 +64,6 @@ public class DashBoard extends AppCompatActivity {
         setContentView(R.layout.activity_dash_board);
 
         circular_progress = (ProgressBar) findViewById(R.id.circular_progress);
-
-        //list_data = (ListView) findViewById(R.id.list_data);
 
         auth = FirebaseAuth.getInstance();
 
@@ -143,6 +137,18 @@ public class DashBoard extends AppCompatActivity {
         //setup Recycler view
         recycle = (RecyclerView) findViewById(R.id.my_recycler_view);
         addEventFirebaseListener();
+
+        //Refresh Layout
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        refreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                       addEventFirebaseListener();
+                        refreshLayout.setRefreshing(false);
+                       }
+                }
+        );
     }
 
     private void addEventFirebaseListener() {
@@ -185,7 +191,6 @@ public class DashBoard extends AppCompatActivity {
             }
         });
 
-        //if (isAppIsInBackground(DashBoard.this)){
             mDatabaseReference.child("Users").addChildEventListener(new ChildEventListener() {
                 @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
@@ -220,8 +225,6 @@ public class DashBoard extends AppCompatActivity {
             });
         }
 
-    //}
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -244,6 +247,12 @@ public class DashBoard extends AppCompatActivity {
             logoutUser();
             return true;
         }
+        else if (id == R.id.menu_refresh){
+            refreshLayout.setRefreshing(true);
+            addEventFirebaseListener();
+            refreshLayout.setRefreshing(false);
+            return true;
+        }
         else if (id == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
@@ -264,7 +273,6 @@ public class DashBoard extends AppCompatActivity {
     private void generateNotification(Context context, String message, int notificationId) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        //builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.twitter_bird));
         Intent intent = new Intent(context, DashBoard.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         builder.setContentIntent(pendingIntent);
@@ -295,31 +303,6 @@ public class DashBoard extends AppCompatActivity {
         return bool;
 
     }
-
-    /*private boolean isAppIsInBackground(Context context) {
-        boolean isInBackground = true;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
-                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    for (String activeProcess : processInfo.pkgList) {
-                        if (activeProcess.equals(context.getPackageName())) {
-                            isInBackground = false;
-                        }
-                    }
-                }
-            }
-        } else {
-            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-            ComponentName componentInfo = taskInfo.get(0).topActivity;
-            if (componentInfo.getPackageName().equals(context.getPackageName())) {
-                isInBackground = false;
-            }
-        }
-
-        return isInBackground;
-    }*/
 
 }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 public class Detail extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
+    private ProgressBar circular_progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +39,19 @@ public class Detail extends AppCompatActivity {
         TextView message = (TextView) findViewById(R.id.view_message);
         message.setText(text);
 
+        circular_progress = (ProgressBar) findViewById(R.id.circular_progress_detail);
+
         ImageView image = (ImageView) findViewById(R.id.image);
+        //Progressing
+        circular_progress.setVisibility(View.VISIBLE);
         //Loading image from Glide library.
         if (imagePath != null) {
             Glide.with(Detail.this).load(imagePath).into(image);
+            circular_progress.setVisibility(View.INVISIBLE);
         }
         else {
             image.setImageResource(R.color.colorPrimary);
+            circular_progress.setVisibility(View.INVISIBLE);
         }
 
     }

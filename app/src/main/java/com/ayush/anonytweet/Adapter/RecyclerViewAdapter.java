@@ -58,15 +58,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void liked(LikeButton likeButton) {
                 Toast.makeText(context, "Liked!", Toast.LENGTH_SHORT).show();
-                //FirebaseDatabase.getInstance().getReference().child("Users").child(mylist.getData_id()).child("Number of Likes").setValue("" + (mylist.getNo_of_likes() + 1));
-                //holder.thumb_button.setLiked(true);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 Toast.makeText(context, "Disliked!", Toast.LENGTH_SHORT).show();
-                FirebaseDatabase.getInstance().getReference().child("Users").child(mylist.getData_id()).child("Number of Likes").setValue("" + (mylist.getNo_of_likes() - 1));
-                holder.thumb_button.setLiked(false);
             }
         });
         holder.thumb_button.setOnAnimationEndListener(new OnAnimationEndListener() {
@@ -74,6 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onAnimationEnd(LikeButton likeButton) {
                 FirebaseDatabase.getInstance().getReference().child("Users").child(mylist.getData_id()).child("Number of Likes").setValue("" + (mylist.getNo_of_likes() + 1));
                 Log.d(TAG, "Animation End for %s" + likeButton);
+                holder.thumb_button.setLiked(true);
             }
         });
 
@@ -122,6 +119,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         return arr;
 
+    }
+
+    public void clear() {
+        this.list = null;
+    }
+
+    public void addAll(List<User> userList) {
+        this.list = userList;
     }
 
     class MyHolder extends RecyclerView.ViewHolder {

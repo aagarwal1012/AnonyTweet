@@ -26,6 +26,14 @@
             app:expandedTitleMarginStart="@dimen/md_keylines"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/circular_progress_detail"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                style="@style/Widget.AppCompat.ProgressBar"/>
+
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
