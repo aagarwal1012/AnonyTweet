@@ -45,8 +45,9 @@
         </activity>
         <activity android:name=".changePassword" />
         <activity android:name=".Tweet" />
-        <activity android:name=".Detail"></activity>
-        <activity android:name=".AboutFragment"/>
+        <activity android:name=".Detail" />
+        <activity android:name=".AboutFragment" />
+        <activity android:name=".userProfile"></activity>
     </application>
 
 </manifest>

@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navheader_height"
     android:background="@drawable/nav_header_wallpaper"
     android:orientation="vertical"
-    android:padding="@dimen/md_keylines">
+    android:paddingTop="30dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="100dp"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/nav_welcome"
         android:textSize="25dp"
         android:text="Welcome"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/nav_header_email"
-        android:layout_width="wrap_content"
-        android:textSize="18dp"
-        android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/nav_header_image"
+        android:layout_below="@+id/nav_welcome"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/no_profile_pic"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#a4bfbbbb"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/nav_header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_welcome"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/nav_header_image"
+        android:text="Your Name"
+        android:textColor="#1d3fc7"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

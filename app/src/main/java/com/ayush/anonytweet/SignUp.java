@@ -15,12 +15,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     Button btnSignup;
     TextView btnLogin,btnForgotPass;
-    EditText input_email,input_pass;
+    EditText input_email,input_pass, input_name;
     RelativeLayout activity_sign_up;
 
     private FirebaseAuth auth;
@@ -37,6 +38,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         btnForgotPass = (TextView)findViewById(R.id.signup_btn_forgot_pass);
         input_email = (EditText)findViewById(R.id.signup_email);
         input_pass = (EditText)findViewById(R.id.signup_password);
+        input_name = (EditText) findViewById(R.id.signup_name);
         activity_sign_up = (RelativeLayout)findViewById(R.id.activity_sign_up);
 
         btnSignup.setOnClickListener(this);
@@ -59,11 +61,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             finish();
         }
         else if(view.getId() == R.id.signup_btn_register){
-            signUpUser(input_email.getText().toString(),input_pass.getText().toString());
+            signUpUser(input_email.getText().toString(),input_pass.getText().toString(), input_name.getText().toString());
         }
     }
 
-    private void signUpUser(String email, String password) {
+    private void signUpUser(String email, String password, String name) {
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -74,8 +76,15 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             snackbar.show();
                         }
                         else{
+
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(input_name.getText().toString())
+                                    .build();
+                            auth.getCurrentUser().updateProfile(profileUpdates);
+
                             snackbar = Snackbar.make(activity_sign_up,"Register success! ",Snackbar.LENGTH_SHORT);
                             snackbar.show();
+
                             startActivity(new Intent(SignUp.this, DashBoard.class));
                         }
                     }

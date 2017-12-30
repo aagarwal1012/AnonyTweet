@@ -5,6 +5,12 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_"
             android:title="Home" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:title="User Profile"
+            android:icon="@drawable/ic_settings" />
+
         <item
             android:id="@+id/nav_change_password"
             android:icon="@drawable/ic_change_password"

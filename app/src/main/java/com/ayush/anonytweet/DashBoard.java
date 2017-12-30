@@ -1,9 +1,11 @@
 package com.ayush.anonytweet;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
@@ -24,10 +26,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ayush.anonytweet.Adapter.RecyclerViewAdapter;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -39,6 +43,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashBoard extends AppCompatActivity {
 
@@ -87,16 +93,21 @@ public class DashBoard extends AppCompatActivity {
 
         // Welcome
         View navHeader = navigationView.getHeaderView(0);
-        TextView nav_header_email = (TextView) navHeader.findViewById(R.id.nav_header_email);
-        FirebaseUser user = auth.getCurrentUser();
+        TextView nav_header_name = (TextView) navHeader.findViewById(R.id.nav_header_name);
+        CircleImageView nav_header_image = (CircleImageView) navHeader.findViewById(R.id.nav_header_image);
+        final FirebaseUser user = auth.getCurrentUser();
         if (auth != null){
-            nav_header_email.setText(user.getEmail());
+            nav_header_name.setText(user.getDisplayName());
+        }
+        if (user.getPhotoUrl() != null){
+            Glide.with(getApplicationContext()).load(user.getPhotoUrl().toString()).into(nav_header_image);
         }
 
         // Set behavior of Navigation drawer
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     // This method will trigger on item Click of navigation menu
+                    @SuppressLint("ResourceType")
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // Set item in checked state
@@ -112,6 +123,14 @@ public class DashBoard extends AppCompatActivity {
                         }
                         else if (id == R.id.nav_about){
                             startActivity(new Intent(DashBoard.this, AboutFragment.class));
+                            /*Fragment fragment = new AboutFragment();
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.swipe_refresh, fragment);
+                            fragmentTransaction.commit();*/
+
+                        }
+                        else if (id == R.id.nav_profile){
+                            startActivity(new Intent(DashBoard.this, userProfile.class));
                         }
 
                         // Closing drawer on item click
