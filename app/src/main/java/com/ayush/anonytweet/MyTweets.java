@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.ayush.anonytweet.Adapter.RecyclerViewAdapter;
+import com.ayush.anonytweet.Adapter.myTweetAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -116,6 +117,7 @@ public class MyTweets extends AppCompatActivity {
                     user.setText(postSnapshot.child("Text ").getValue(String.class));
                     user.setImagePath(postSnapshot.child("Image Path").getValue(String.class));
                     user.setEmail(postSnapshot.child("Email").getValue(String.class));
+                    user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
                     if (postSnapshot.child("Number of Likes").getValue(String.class) != null)
                         user.setNo_of_likes(Integer.parseInt(postSnapshot.child("Number of Likes").getValue(String.class)));
                     user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
@@ -125,7 +127,7 @@ public class MyTweets extends AppCompatActivity {
                 }
 
                 recycle.setHasFixedSize(true);
-                RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list_user, MyTweets.this);
+                myTweetAdapter recyclerViewAdapter = new myTweetAdapter(list_user, MyTweets.this);
                 recycle.setLayoutManager(new LinearLayoutManager(MyTweets.this));
                 recycle.setAdapter(recyclerViewAdapter);
                 circular_progress.setVisibility(View.INVISIBLE);

@@ -8,4 +8,5 @@
     <color name="medium_grey">#9E9E9E</color>
     <color name="button_grey">#757575</color>
     <color name="favourite_red">#E50000</color>
+    <color name="splash_screen_background">#d9fffc</color>
 </resources>

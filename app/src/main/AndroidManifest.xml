@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login"/>
+        <activity android:name=".login" />
         <activity android:name=".DashBoard" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".SignUp" />
@@ -50,6 +50,7 @@
         <activity android:name=".AboutFragment" />
         <activity android:name=".userProfile" />
         <activity android:name=".MyTweets" />
+        <activity android:name=".myTweetDetail"></activity>
     </application>
 
 </manifest>
