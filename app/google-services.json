@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "326152514646-6hfkt55rrkcprmrnmneg007a3hqiaa21.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayush.anonytweet",
+            "certificate_hash": "70a6197b311d19bfefd3aabe9fd42a8c694e1289"
+          }
+        },
+        {
           "client_id": "326152514646-hg0uc33cqvgpuuggiot47ruc3179lhrl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

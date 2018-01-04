@@ -132,6 +132,9 @@ public class DashBoard extends AppCompatActivity {
                         else if (id == R.id.nav_profile){
                             startActivity(new Intent(DashBoard.this, userProfile.class));
                         }
+                        else if (id == R.id.nav_mytweets){
+                            startActivity(new Intent(DashBoard.this, MyTweets.class));
+                        }
 
                         // Closing drawer on item click
                         mDrawerLayout.closeDrawers();
@@ -189,6 +192,7 @@ public class DashBoard extends AppCompatActivity {
                     User user = new User();            //postSnapshot.getValue(User.class);
                     user.setText(postSnapshot.child("Text ").getValue(String.class));
                     user.setImagePath(postSnapshot.child("Image Path").getValue(String.class));
+                    user.setEmail(postSnapshot.child("Email").getValue(String.class));
                     if (postSnapshot.child("Number of Likes").getValue(String.class) != null)
                         user.setNo_of_likes(Integer.parseInt(postSnapshot.child("Number of Likes").getValue(String.class)));
                     user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
