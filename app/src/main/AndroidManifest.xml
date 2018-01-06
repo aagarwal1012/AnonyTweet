@@ -50,7 +50,8 @@
         <activity android:name=".AboutFragment" />
         <activity android:name=".userProfile" />
         <activity android:name=".MyTweets" />
-        <activity android:name=".myTweetDetail"></activity>
+        <activity android:name=".myTweetDetail" />
+        <activity android:name=".editTweet"></activity>
     </application>
 
 </manifest>

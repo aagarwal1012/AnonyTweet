@@ -1,5 +1,6 @@
 package com.ayush.anonytweet;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +21,12 @@ public class myTweetDetail extends AppCompatActivity {
 
     Button deleteTweet;
 
+    private String text, imagePath, tweetId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_my_tweet_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_tweet_detail_toolbar);
         setSupportActionBar(toolbar);
@@ -46,7 +49,6 @@ public class myTweetDetail extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         int position = bundle.getInt(EXTRA_POSITION);
-        final String text, imagePath, tweetId;
         text = bundle.getString("Text");
         imagePath = bundle.getString("ImagePath");
         tweetId = bundle.getString("TweetId");
@@ -69,14 +71,47 @@ public class myTweetDetail extends AppCompatActivity {
             circular_progress.setVisibility(View.INVISIBLE);
         }
 
+        //delete button
         deleteTweet = (Button) findViewById(R.id.delete_tweet);
         deleteTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase.getInstance().getReference().child("Users").child(tweetId).removeValue();
-                startActivity(new Intent(getApplicationContext(), MyTweets.class));
+
+                // custom dialog
+                final Dialog dialog = new Dialog(myTweetDetail.this);
+                dialog.setContentView(R.layout.dialogue);
+
+                TextView message = (TextView) dialog.findViewById(R.id.message);
+                message.setText("Your tweet will be deleted...");
+
+                Button ok_btn = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                ok_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(tweetId).removeValue();
+                        startActivity(new Intent(getApplicationContext(), MyTweets.class));
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+
+            }
+        });
+
+        //edit button
+        final Button editTweet = (Button) findViewById(R.id.edit_tweet);
+        editTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), editTweet.class);
+                intent.putExtra("TweetId", tweetId);
+                intent.putExtra("ImageUrl", imagePath);
+                intent.putExtra("Text", text);
+                startActivity(intent);
             }
         });
 
     }
+
 }

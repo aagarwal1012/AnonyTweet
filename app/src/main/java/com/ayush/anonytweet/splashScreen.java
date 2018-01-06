@@ -28,8 +28,8 @@ public class splashScreen extends AwesomeSplash {
         //Choose LOGO OR PATH; if you don't provide String value for path it's logo by default
 
         //Customize Logo
-        configSplash.setLogoSplash(R.drawable.cutmypic);//or any other drawable
-        configSplash.setAnimLogoSplashDuration(4000); //int ms
+        configSplash.setLogoSplash(R.drawable.cutmypic3);//or any other drawable
+        configSplash.setAnimLogoSplashDuration(3000); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
 
@@ -46,7 +46,7 @@ public class splashScreen extends AwesomeSplash {
 
         //Customize Title
         configSplash.setTitleSplash("AnonyTweet");
-        configSplash.setTitleTextColor(R.color.com_facebook_blue);
+        configSplash.setTitleTextColor(R.color.white);
         configSplash.setTitleTextSize(30f); //float value
         configSplash.setAnimTitleDuration(3000);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.ayush.anonytweet.Detail;
 import com.ayush.anonytweet.R;
 import com.ayush.anonytweet.User;
+import com.ayush.anonytweet.myTweetDetail;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.FirebaseDatabase;
 import com.like.LikeButton;
@@ -152,7 +153,7 @@ public class myTweetAdapter extends RecyclerView.Adapter<myTweetAdapter.MyHolder
                 @Override
                 public void onClick(View view) {
                     Context context = view.getContext();
-                    Intent intent = new Intent(context, Detail.class);
+                    Intent intent = new Intent(context, myTweetDetail.class);
                     int position = getAdapterPosition();
                     intent.putExtra(Detail.EXTRA_POSITION, (list.size() - position - 1));
                     intent.putExtra("Text", list.get(list.size() - position - 1).getText());
