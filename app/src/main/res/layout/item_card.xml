@@ -16,7 +16,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/card_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/md_keylines"
+            android:layout_marginTop="@dimen/md_keylines"
+            android:layout_marginRight="@dimen/md_keylines"
+            android:layout_marginBottom="@dimen/md_keylines"
+            android:ellipsize="end"
+            android:textSize="18dp"
+            android:textColor="@color/splash_screen_background" />
+
         <ImageView
+            android:layout_below="@+id/card_userName"
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_image_height"
@@ -32,7 +45,7 @@
             android:layout_below="@+id/card_image"
             android:layout_margin="16dp"
             tools:text="@string/item_desc"
-            android:maxLines="3"
+            android:maxLines="10"
             android:ellipsize="end"
             android:textColor="@color/dark_grey"
             android:textSize="@dimen/article_subheading" />
@@ -48,8 +61,19 @@
             android:layout_marginBottom="@dimen/md_keylines"
             android:ellipsize="end"
             android:textSize="18dp"
-            android:text="No of Likes"
+            android:text="0 Likes"
             android:textColor="@color/com_facebook_button_background_color" />
+
+        <com.like.LikeButton
+            android:id="@+id/card_fav_button"
+            android:layout_width="@dimen/cards_button_width"
+            android:layout_height="@dimen/cards_button_height"
+            android:layout_below="@+id/card_text"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/thumb_button"
+            app:icon_size="25dp"
+            app:icon_type="heart"
+            app:liked="false"/>
 
         <com.like.LikeButton
             android:id="@+id/thumb_button"
@@ -60,11 +84,25 @@
             app:dots_primary_color="@android:color/holo_blue_light"
             app:dots_secondary_color="@android:color/holo_blue_dark"
             app:icon_size="25dp"
+            app:liked="false"
             android:layout_below="@+id/card_text"
             android:layout_alignParentRight="true"
             app:like_drawable="@drawable/thumb_on"
             app:unlike_drawable="@drawable/thumb_off" />
 
+        <TextView
+            android:id="@+id/card_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/like_view"
+            android:layout_marginLeft="@dimen/md_keylines"
+            android:layout_marginRight="@dimen/md_keylines"
+            android:layout_marginBottom="@dimen/md_keylines"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:textSize="16dp"
+            android:text="Comments"
+            android:textColor="#6c6c6c" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

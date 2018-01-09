@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ayush.anonytweet.Classes.usersLiked;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +27,8 @@ import com.google.firebase.storage.UploadTask;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Tweet extends AppCompatActivity {
@@ -50,13 +53,15 @@ public class Tweet extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 7;
     private final String TAG = "Tweet";
 
-    //private User currentUser; //save the data in current user
+    List<String> likedUsers = new ArrayList<>();
 
     String dataId;
 
     Uri imageUrl;
 
     FirebaseUser user;
+
+    com.ayush.anonytweet.Classes.usersLiked usersLiked;
 
 
     @Override
@@ -84,6 +89,10 @@ public class Tweet extends AppCompatActivity {
 
         //Get user email id and User-id;
         user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //usersLiked
+        //likedUsers.add("0") ;
+        usersLiked = new usersLiked(likedUsers, dataId);
 
         chooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,9 +157,12 @@ public class Tweet extends AppCompatActivity {
                 }
             });
 
+            mDatabaseReference.child("Likes").child(dataId).setValue(usersLiked);
+
         }
         else {
             if (text.getText() != null && text.getText().toString().equals("") == false){
+                mDatabaseReference.child("Likes").child(dataId).setValue(usersLiked);
                 mDatabaseReference.child("Users").child(dataId).child("Image Path").setValue(null);
                 mDatabaseReference.child("Users").child(dataId).child("Email").setValue(user.getEmail());
                 mDatabaseReference.child("Users").child(dataId).child("Data Id").setValue(dataId);

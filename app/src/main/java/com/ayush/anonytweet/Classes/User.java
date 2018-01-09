@@ -1,4 +1,4 @@
-package com.ayush.anonytweet;
+package com.ayush.anonytweet.Classes;
 
 
 public class User {

@@ -47,7 +47,11 @@ dependencies {
     compile 'com.github.jd-alexander:LikeButton:0.2.3'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+    compile 'com.firebaseui:firebase-ui:0.6.2'
+    compile 'com.github.hani-momanii:SuperNova-Emoji:1.0'
 }
+
+
 
 
 

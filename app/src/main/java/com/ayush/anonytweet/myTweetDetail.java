@@ -89,6 +89,7 @@ public class myTweetDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         FirebaseDatabase.getInstance().getReference().child("Users").child(tweetId).removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("Likes").child(tweetId).removeValue();
                         startActivity(new Intent(getApplicationContext(), MyTweets.class));
                         dialog.dismiss();
                     }

@@ -51,7 +51,9 @@
         <activity android:name=".userProfile" />
         <activity android:name=".MyTweets" />
         <activity android:name=".myTweetDetail" />
-        <activity android:name=".editTweet"></activity>
+        <activity android:name=".editTweet" />
+        <activity android:name=".postComments" />
+        <activity android:name=".myFavourites"></activity>
     </application>
 
 </manifest>

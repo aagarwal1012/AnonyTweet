@@ -6,17 +6,17 @@
     android:background="@drawable/bkg1">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_mytweets"
+        android:id="@+id/appbar_myfavourites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_mytweets"
+            android:id="@+id/toolbar_myfavourites"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_arrow_back_white"
-            app:title="My Tweets"
+            app:title="My Favourites"
             app:titleTextColor="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -25,7 +25,7 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipe_refresh_mytweets"
+        android:id="@+id/swipe_refresh_myfavourites"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -33,7 +33,7 @@
         <android.support.v7.widget.RecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/my_recycler_view_mytweets"
+            android:id="@+id/my_recycler_view_myfavourites"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -47,7 +47,7 @@
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/circular_progress_mytweets"
+        android:id="@+id/circular_progress_myfavourites"
         android:visibility="invisible"
         android:layout_gravity="center"
         style="@style/Widget.AppCompat.ProgressBar"/>

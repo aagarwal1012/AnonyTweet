@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.ayush.anonytweet.Adapter.RecyclerViewAdapter;
 import com.ayush.anonytweet.Adapter.myTweetAdapter;
 import com.ayush.anonytweet.Classes.User;
 import com.ayush.anonytweet.Classes.favTweets;
@@ -27,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTweets extends AppCompatActivity {
+public class myFavourites extends AppCompatActivity {
 
     private ProgressBar circular_progress;
     RecyclerView recycle;
@@ -46,12 +47,12 @@ public class MyTweets extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_tweets);
+        setContentView(R.layout.activity_my_favourites);
 
-        circular_progress = (ProgressBar) findViewById(R.id.circular_progress_mytweets);
+        circular_progress = (ProgressBar) findViewById(R.id.circular_progress_myfavourites);
 
         // Adding Toolbar to Main screen
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_mytweets);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_myfavourites);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -85,11 +86,11 @@ public class MyTweets extends AppCompatActivity {
         userEmail = auth.getCurrentUser().getEmail();
 
         //setup Recycler view
-        recycle = (RecyclerView) findViewById(R.id.my_recycler_view_mytweets);
+        recycle = (RecyclerView) findViewById(R.id.my_recycler_view_myfavourites);
         addEventFirebaseListener();
 
         //Refresh Layout
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_mytweets);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_myfavourites);
         refreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -117,6 +118,11 @@ public class MyTweets extends AppCompatActivity {
                 if (list_usersLiked.size() > 0)
                     list_usersLiked.clear();
 
+                favTweets favTweets = dataSnapshot.child("Favourites").child(FirebaseAuth.getInstance().getUid()).getValue(com.ayush.anonytweet.Classes.favTweets.class);
+                if (favTweets == null){
+                    favTweets = new favTweets();
+                }
+
                 for (DataSnapshot postSnapshot:dataSnapshot.child("Users").getChildren()) {
 
                     User user = new User();
@@ -126,8 +132,11 @@ public class MyTweets extends AppCompatActivity {
                     if (postSnapshot.child("Number of Likes").getValue(String.class) != null)
                         user.setNo_of_likes(Integer.parseInt(postSnapshot.child("Number of Likes").getValue(String.class)));
                     user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
-                    if (user != null && user.getEmail() != null && FirebaseAuth.getInstance().getCurrentUser() != null && user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) == true) {
-                            list_user.add(user);
+                    if(favTweets != null){
+                        for (int i = 0; i < favTweets.getTweetIds().size(); i++){
+                            if(user != null && user.getData_id() != null && user.getData_id().equals(favTweets.getTweetIds().get(i)))
+                                list_user.add(user);
+                        }
                     }
 
                 }
@@ -150,11 +159,9 @@ public class MyTweets extends AppCompatActivity {
                     }
                 }
 
-                favTweets favTweets = dataSnapshot.child("Favourites").child(FirebaseAuth.getInstance().getUid()).getValue(com.ayush.anonytweet.Classes.favTweets.class);
-
                 recycle.setHasFixedSize(true);
-                myTweetAdapter recyclerViewAdapter = new myTweetAdapter(list_user, list_usersLiked, favTweets, MyTweets.this);
-                recycle.setLayoutManager(new LinearLayoutManager(MyTweets.this));
+                RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list_user, list_usersLiked, favTweets, myFavourites.this);
+                recycle.setLayoutManager(new LinearLayoutManager(myFavourites.this));
                 recycle.setAdapter(recyclerViewAdapter);
                 circular_progress.setVisibility(View.INVISIBLE);
 
@@ -165,41 +172,5 @@ public class MyTweets extends AppCompatActivity {
 
             }
         });
-
-//        mDatabaseReference.child("Users").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                if (list_user.size() > 0)
-//                    list_user.clear();
-//                for (DataSnapshot postSnapshot:dataSnapshot.getChildren()) {
-//
-//                    User user = new User();            //postSnapshot.getValue(User.class);
-//                    user.setText(postSnapshot.child("Text ").getValue(String.class));
-//                    user.setImagePath(postSnapshot.child("Image Path").getValue(String.class));
-//                    user.setEmail(postSnapshot.child("Email").getValue(String.class));
-//                    user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
-//                    if (postSnapshot.child("Number of Likes").getValue(String.class) != null)
-//                        user.setNo_of_likes(Integer.parseInt(postSnapshot.child("Number of Likes").getValue(String.class)));
-//                    user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
-//                    if (user != null && user.getEmail().equals(userEmail) == true)
-//                        list_user.add(user);
-//
-//                }
-//
-//                recycle.setHasFixedSize(true);
-//                myTweetAdapter recyclerViewAdapter = new myTweetAdapter(list_user, MyTweets.this);
-//                recycle.setLayoutManager(new LinearLayoutManager(MyTweets.this));
-//                recycle.setAdapter(recyclerViewAdapter);
-//                circular_progress.setVisibility(View.INVISIBLE);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
     }
 }

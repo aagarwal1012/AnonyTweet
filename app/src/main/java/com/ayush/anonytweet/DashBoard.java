@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
@@ -26,11 +25,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ayush.anonytweet.Adapter.RecyclerViewAdapter;
+import com.ayush.anonytweet.Classes.User;
+import com.ayush.anonytweet.Classes.favTweets;
+import com.ayush.anonytweet.Classes.usersLiked;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,9 +60,10 @@ public class DashBoard extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
 
     private List<User> list_user = new ArrayList<>();
+    private List<usersLiked> list_usersLiked = new ArrayList<>();
 
     public final String notificationTweet = "New Tweets";
-    public final String notificationLikes = "New Likes";
+    public final String notificationLikes = "New Tweet Updates";
     public final int notificationTweetId = 1, notificationLikesId = 2;
 
     @Override
@@ -135,6 +137,9 @@ public class DashBoard extends AppCompatActivity {
                         else if (id == R.id.nav_mytweets){
                             startActivity(new Intent(DashBoard.this, MyTweets.class));
                         }
+                        else if(id == R.id.nav_myfavourites){
+                            startActivity(new Intent(DashBoard.this, myFavourites.class));
+                        }
 
                         // Closing drawer on item click
                         mDrawerLayout.closeDrawers();
@@ -181,15 +186,18 @@ public class DashBoard extends AppCompatActivity {
         //int tweet_added = 0, new_likes = 0;
 
         //Read from database
-        mDatabaseReference.child("Users").addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (list_user.size() > 0)
                     list_user.clear();
-                for (DataSnapshot postSnapshot:dataSnapshot.getChildren()) {
+                if (list_usersLiked.size() > 0)
+                    list_usersLiked.clear();
 
-                    User user = new User();            //postSnapshot.getValue(User.class);
+                for (DataSnapshot postSnapshot:dataSnapshot.child("Users").getChildren()) {
+
+                    User user = new User();
                     user.setText(postSnapshot.child("Text ").getValue(String.class));
                     user.setImagePath(postSnapshot.child("Image Path").getValue(String.class));
                     user.setEmail(postSnapshot.child("Email").getValue(String.class));
@@ -200,8 +208,16 @@ public class DashBoard extends AppCompatActivity {
 
                 }
 
+                for (DataSnapshot postSnapshot:dataSnapshot.child("Likes").getChildren())
+                {
+                    usersLiked usersLiked = postSnapshot.getValue(com.ayush.anonytweet.Classes.usersLiked.class);
+                    list_usersLiked.add(usersLiked);
+                }
+
+                favTweets favTweets = dataSnapshot.child("Favourites").child(FirebaseAuth.getInstance().getUid()).getValue(com.ayush.anonytweet.Classes.favTweets.class);
+
                 recycle.setHasFixedSize(true);
-                RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list_user, DashBoard.this);
+                RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list_user, list_usersLiked, favTweets, DashBoard.this);
                 recycle.setLayoutManager(new LinearLayoutManager(DashBoard.this));
                 recycle.setAdapter(recyclerViewAdapter);
                 circular_progress.setVisibility(View.INVISIBLE);
