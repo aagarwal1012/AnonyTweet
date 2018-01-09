@@ -41,6 +41,7 @@ public class Detail extends AppCompatActivity {
             }
         });
 
+
         // Set Collapsing Toolbar layout to the screen
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
