@@ -24,6 +24,12 @@ public class myTweetDetail extends AppCompatActivity {
     private String text, imagePath, tweetId;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tweet_detail);
@@ -36,7 +42,8 @@ public class myTweetDetail extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MyTweets.class));
+                //startActivity(new Intent(getApplicationContext(), MyTweets.class));
+                onSupportNavigateUp();
             }
         });
 

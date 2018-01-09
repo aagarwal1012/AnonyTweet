@@ -45,6 +45,12 @@ public class myFavourites extends AppCompatActivity {
     private List<usersLiked> list_usersLiked = new ArrayList<>();
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_favourites);
@@ -61,7 +67,8 @@ public class myFavourites extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                //startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                onSupportNavigateUp();
             }
         });
 

@@ -18,6 +18,12 @@ public class Detail extends AppCompatActivity {
     private ProgressBar circular_progress;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -30,7 +36,8 @@ public class Detail extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                //startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                onSupportNavigateUp();
             }
         });
 

@@ -18,6 +18,7 @@ import com.ayush.anonytweet.Classes.favTweets;
 import com.ayush.anonytweet.Detail;
 import com.ayush.anonytweet.R;
 import com.ayush.anonytweet.Classes.User;
+import com.ayush.anonytweet.myTweetDetail;
 import com.ayush.anonytweet.postComments;
 import com.ayush.anonytweet.Classes.usersLiked;
 import com.bumptech.glide.Glide;
@@ -287,13 +288,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, Detail.class);
                     int position = getAdapterPosition();
-                    intent.putExtra(Detail.EXTRA_POSITION, (list.size() - position - 1));
-                    intent.putExtra("Text", list.get(list.size() - position - 1).getText());
-                    intent.putExtra("ImagePath", list.get(list.size() - position - 1).getImagePath());
-                    context.startActivity(intent);
+                    Context context = view.getContext();
+                    if (list.get(list.size() - position - 1).getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+                        Intent intent = new Intent(context, myTweetDetail.class);
+                        intent.putExtra(Detail.EXTRA_POSITION, (list.size() - position - 1));
+                        intent.putExtra("Text", list.get(list.size() - position - 1).getText());
+                        intent.putExtra("ImagePath", list.get(list.size() - position - 1).getImagePath());
+                        intent.putExtra("TweetId", list.get(list.size() - position - 1).getData_id());
+                        context.startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(context, Detail.class);
+                        intent.putExtra(Detail.EXTRA_POSITION, (list.size() - position - 1));
+                        intent.putExtra("Text", list.get(list.size() - position - 1).getText());
+                        intent.putExtra("ImagePath", list.get(list.size() - position - 1).getImagePath());
+                        context.startActivity(intent);
+                    }
 
                 }
             });
