@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -150,9 +151,14 @@ public class MyTweets extends AppCompatActivity {
                         }
                     }
                     else if (temp == list_user.size() - 1){
-                        if (list_user.size() != 0 && usersLiked != null && usersLiked.getTweetId() != null && list_user.get(temp).getData_id().equals(usersLiked.getTweetId()) == true){
-                            list_usersLiked.add(usersLiked);
-                            temp = 0;
+                        try{
+                            if (list_user.size() != 0 && usersLiked != null && usersLiked.getTweetId() != null && list_user.get(temp).getData_id().equals(usersLiked.getTweetId()) == true){
+                                list_usersLiked.add(usersLiked);
+                                temp = 0;
+                            }
+                        }
+                        catch (Exception e){
+                            Log.d("Error", "Error! " + e);
                         }
                     }
                 }

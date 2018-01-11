@@ -85,12 +85,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if(favTweets != null && favTweets.getTweetIds() != null){
             for (int i = 0; i < favTweets.getTweetIds().size(); i++){
-                if(mylist != null && mylist.getData_id().equals(favTweets.getTweetIds().get(i))){
-                    holder.fav_button.setLiked(true);
-                    break;
+                try{
+                    if(mylist != null && favTweets != null && mylist.getData_id().equals(favTweets.getTweetIds().get(i))){
+                        holder.fav_button.setLiked(true);
+                        break;
+                    }
+                    else {
+                        holder.fav_button.setLiked(false);
+                    }
                 }
-                else {
-                    holder.fav_button.setLiked(false);
+                catch (Exception e){
+                    Log.d("Error", "Error! "+e);
                 }
             }
         }
