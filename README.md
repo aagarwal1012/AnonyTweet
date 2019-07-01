@@ -1,4 +1,3 @@
 # AnonyTweet
 
-This app is created me Ayush Agarwal and I am a student at IIT Roorkee and pursuing B.Tech. degree in Compter Science and Engineering.
-Any suggestions regarding the app, email at aagarwal9782@gmail.com
+A social networking Android app where anonymity is the priority. Posting, reacting, commenting can be done like confessions via this app.
