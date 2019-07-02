@@ -3,7 +3,7 @@ package com.ayush.anonytweet.Classes;
 import java.util.List;
 
 public class favTweets {
-    List<String> tweetIds;
+    private List<String> tweetIds;
 
     public favTweets() {
     }

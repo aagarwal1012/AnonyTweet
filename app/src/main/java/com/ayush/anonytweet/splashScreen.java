@@ -1,17 +1,20 @@
 package com.ayush.anonytweet;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.daimajia.androidanimations.library.Techniques;
-import com.facebook.login.Login;
 import com.google.firebase.database.FirebaseDatabase;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 public class splashScreen extends AwesomeSplash {
+
+    private static final int LOGO_DRAWABLE = R.drawable.cutmypic3;
+
+    private static final int SPLASH_SCREEN_BACKGROUND_COLOR = R.color.splash_screen_background;
+    private static final int WHITE_COLOR = R.color.white;
+    private static final int FACEBOOK_BLUE_COLOR = R.color.com_facebook_blue;
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
@@ -20,7 +23,7 @@ public class splashScreen extends AwesomeSplash {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.splash_screen_background); //any color you want form colors.xml
+        configSplash.setBackgroundColor(SPLASH_SCREEN_BACKGROUND_COLOR); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(2000); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
@@ -28,7 +31,7 @@ public class splashScreen extends AwesomeSplash {
         //Choose LOGO OR PATH; if you don't provide String value for path it's logo by default
 
         //Customize Logo
-        configSplash.setLogoSplash(R.drawable.cutmypic3);//or any other drawable
+        configSplash.setLogoSplash(LOGO_DRAWABLE);//or any other drawable
         configSplash.setAnimLogoSplashDuration(3000); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
@@ -39,14 +42,14 @@ public class splashScreen extends AwesomeSplash {
         configSplash.setOriginalWidth(400); //in relation to your svg (path) resource
         configSplash.setAnimPathStrokeDrawingDuration(3000);
         configSplash.setPathSplashStrokeSize(3); //I advise value be <5
-        configSplash.setPathSplashStrokeColor(R.color.white); //any color you want form colors.xml
+        configSplash.setPathSplashStrokeColor(WHITE_COLOR); //any color you want form colors.xml
         configSplash.setAnimPathFillingDuration(3000);
-        configSplash.setPathSplashFillColor(R.color.com_facebook_blue); //path object filling color
+        configSplash.setPathSplashFillColor(FACEBOOK_BLUE_COLOR); //path object filling color
 
 
         //Customize Title
         configSplash.setTitleSplash("AnonyTweet");
-        configSplash.setTitleTextColor(R.color.white);
+        configSplash.setTitleTextColor(WHITE_COLOR);
         configSplash.setTitleTextSize(30f); //float value
         configSplash.setAnimTitleDuration(3000);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);

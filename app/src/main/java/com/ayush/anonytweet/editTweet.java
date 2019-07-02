@@ -3,54 +3,54 @@ package com.ayush.anonytweet;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class editTweet extends AppCompatActivity {
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    private final static int PICK_IMAGE_REQUEST = 106;
 
-    FirebaseStorage firebaseStorage;
-    StorageReference storageReference;
+    private static final int ACTIVITY_EDIT_TWEET_LAYOUT = R.layout.activity_edit_tweet;
 
-    FirebaseAuth auth;
+    private static final int TWEET_IMAGE_ID = R.id.tweet_image;
+    private static final int EDIT_IMAGE_BTN_ID = R.id.edit_image_btn;
+    private static final int EDIT_TWEET_ID = R.id.edit_tweet;
+    private static final int BTN_SAVE_ID = R.id.btn_save;
 
-    String tweetId, imagePath, text;
-
-    ImageView tweet_image, tweet_image_btn;
-    EditText tweet_message;
-    Button save;
-
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private FirebaseAuth auth;
+    private String tweetId;
+    private String imagePath;
+    private String text;
+    private ImageView tweet_image;
+    private ImageView tweet_image_btn;
+    private EditText tweet_message;
+    private Button save;
     private Uri filepath;
-
-    final static int  PICK_IMAGE_REQUEST = 106;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_tweet);
+        setContentView(ACTIVITY_EDIT_TWEET_LAYOUT);
 
         //setting firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -59,12 +59,12 @@ public class editTweet extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
         auth = FirebaseAuth.getInstance();
 
-        tweet_image = (ImageView) findViewById(R.id.tweet_image);
-        tweet_image_btn = (ImageView) findViewById(R.id.edit_image_btn);
+        tweet_image = findViewById(TWEET_IMAGE_ID);
+        tweet_image_btn = findViewById(EDIT_IMAGE_BTN_ID);
 
-        tweet_message = (EditText) findViewById(R.id.edit_tweet);
+        tweet_message = findViewById(EDIT_TWEET_ID);
 
-        save = (Button) findViewById(R.id.btn_save);
+        save = findViewById(BTN_SAVE_ID);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -76,24 +76,16 @@ public class editTweet extends AppCompatActivity {
             Glide.with(editTweet.this).load(imagePath).into(tweet_image);
         }
 
-        if(text != null){
+        if (text != null) {
             tweet_message.setText(text, TextView.BufferType.EDITABLE);
         }
 
-        tweet_image_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseImage();
-            }
-        });
+        tweet_image_btn.setOnClickListener(view -> chooseImage());
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadPic();
-                uploadText();
-                startActivity(new Intent(getApplicationContext(), MyTweets.class));
-            }
+        save.setOnClickListener(view -> {
+            uploadPic();
+            uploadText();
+            startActivity(new Intent(getApplicationContext(), MyTweets.class));
         });
 
     }
@@ -107,33 +99,25 @@ public class editTweet extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent , "Select Picture") , PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
     }
 
     private void uploadPic() {
 
-        if (filepath != null){
+        if (filepath != null) {
             final String temp = UUID.randomUUID().toString();
             StorageReference ref = storageReference.child("images/" + auth.getCurrentUser().getEmail() + "/" + temp);
-            ref.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            ref.putFile(filepath).addOnSuccessListener(taskSnapshot -> {
 
-                    // Get url to the uploaded content;
-                    Uri imageUrl = taskSnapshot.getDownloadUrl();
+                // Get url to the uploaded content;
+                Uri imageUrl = taskSnapshot.getDownloadUrl();
 
-                    if (imageUrl != null) {
-                        databaseReference.child("Users").child(tweetId).child("Image Path").setValue(imageUrl.toString());
-                    }
-
+                if (imageUrl != null) {
+                    databaseReference.child("Users").child(tweetId).child("Image Path").setValue(imageUrl.toString());
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(" ", "onFailure: ", e);
-                }
-            });
+
+            }).addOnFailureListener(e -> Log.d(" ", "onFailure: ", e));
 
         }
 
@@ -144,14 +128,13 @@ public class editTweet extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Image set to imageView
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             filepath = data.getData();
-            try{
+            try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
                 tweet_image.setImageBitmap(bitmap);
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

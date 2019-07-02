@@ -1,9 +1,8 @@
 package com.ayush.anonytweet;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,14 @@ import com.bumptech.glide.Glide;
 public class Detail extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
-    private ProgressBar circular_progress;
+
+    private static final int ACTIVITY_DETAIL_LAYOUT = R.layout.activity_detail;
+
+    private static final int TOOLBAR_ID = R.id.toolbar;
+    private static final int COLLAPSING_TOOLBAR_ID = R.id.collapsing_toolbar;
+    private static final int VIEW_MESSAGE_ID = R.id.view_message;
+    private static final int CIRCULAR_PROGRESS_DETAIL_ID = R.id.circular_progress_detail;
+    private static final int IMAGE_ID = R.id.image;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -26,25 +32,22 @@ public class Detail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(ACTIVITY_DETAIL_LAYOUT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(TOOLBAR_ID);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //startActivity(new Intent(getApplicationContext(), DashBoard.class));
-                onSupportNavigateUp();
-            }
+        toolbar.setNavigationOnClickListener(view -> {
+            //startActivity(new Intent(getApplicationContext(), DashBoard.class));
+            onSupportNavigateUp();
         });
 
 
         // Set Collapsing Toolbar layout to the screen
         CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+                findViewById(COLLAPSING_TOOLBAR_ID);
         // Set title of Detail page
         collapsingToolbar.setTitle(" ");
 
@@ -55,20 +58,19 @@ public class Detail extends AppCompatActivity {
         text = bundle.getString("Text");
         imagePath = bundle.getString("ImagePath");
 
-        TextView message = (TextView) findViewById(R.id.view_message);
+        TextView message = findViewById(VIEW_MESSAGE_ID);
         message.setText(text);
 
-        circular_progress = (ProgressBar) findViewById(R.id.circular_progress_detail);
+        ProgressBar circular_progress = findViewById(CIRCULAR_PROGRESS_DETAIL_ID);
 
-        ImageView image = (ImageView) findViewById(R.id.image);
+        ImageView image = findViewById(IMAGE_ID);
         //Progressing
         circular_progress.setVisibility(View.VISIBLE);
         //Loading image from Glide library.
         if (imagePath != null) {
             Glide.with(Detail.this).load(imagePath).into(image);
             circular_progress.setVisibility(View.INVISIBLE);
-        }
-        else {
+        } else {
             image.setImageResource(R.color.colorPrimary);
             circular_progress.setVisibility(View.INVISIBLE);
         }

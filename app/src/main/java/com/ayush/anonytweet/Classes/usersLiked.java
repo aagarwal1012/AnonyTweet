@@ -3,8 +3,9 @@ package com.ayush.anonytweet.Classes;
 import java.util.List;
 
 public class usersLiked {
-    List<String> liked_users;
-    String tweetId, owner_tweet_email;
+    private List<String> liked_users;
+    private String tweetId;
+    String owner_tweet_email;
 
     public usersLiked() {
     }

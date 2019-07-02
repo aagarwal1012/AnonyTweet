@@ -5,7 +5,7 @@ public class User {
     private String data_id, text, imagePath, email;
     private int no_of_likes;
 
-    public User(){
+    public User() {
     }
 
 

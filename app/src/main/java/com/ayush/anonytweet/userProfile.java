@@ -3,12 +3,10 @@ package com.ayush.anonytweet;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,10 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -27,106 +21,94 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class userProfile extends AppCompatActivity {
 
-    ImageView profile_image, profile_image_btn, edit_name_btn;
-    TextView email_view;
-    EditText name;
-    Button save;
+    private final static int PICK_IMAGE_REQUEST = 10;
 
-    //Firebase Database
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
+    private static final int ACTIVITY_USER_PROFILE_LAYOUT = R.layout.activity_user_profile;
 
-    //Firebase Storage
-    private FirebaseStorage storage;
+    private static final int PROFILE_IMAGE_ID = R.id.profile_image;
+    private static final int PROFILE_IMAGE_BTN_ID = R.id.profile_image_btn;
+    private static final int NAME_BTN_ID = R.id.name_btn;
+    private static final int EMAIL_ID = R.id.email;
+    private static final int NAME_ID = R.id.name;
+    private static final int BTN_SAVE_ID = R.id.btn_save;
+
+    private ImageView profile_image;
+    private ImageView profile_image_btn;
+    private ImageView edit_name_btn;
+    private TextView email_view;
+    private EditText name;
+    private Button save;
+    private FirebaseUser user;
     private StorageReference storageReference;
-
-    FirebaseUser user;
-
     private Uri filepath;
-
-    final static int  PICK_IMAGE_REQUEST = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(ACTIVITY_USER_PROFILE_LAYOUT);
 
-        profile_image = (ImageView) findViewById(R.id.profile_image);
-        profile_image_btn = (ImageView) findViewById(R.id.profile_image_btn);
-        edit_name_btn = (ImageView) findViewById(R.id.name_btn);
+        profile_image = findViewById(PROFILE_IMAGE_ID);
+        profile_image_btn = findViewById(PROFILE_IMAGE_BTN_ID);
+        edit_name_btn = findViewById(NAME_BTN_ID);
 
-        email_view = (TextView) findViewById(R.id.email);
+        email_view = findViewById(EMAIL_ID);
 
-        name = (EditText) findViewById(R.id.name);
+        name = findViewById(NAME_ID);
 
-        save = (Button) findViewById(R.id.btn_save);
+        save = findViewById(BTN_SAVE_ID);
 
         //Firebase storage init
-        storage = FirebaseStorage.getInstance();
+        //Firebase Storage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
         //Firebase database init
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference();
+        //Firebase Database
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         String user_name = null, email = null;
         Uri photoUrl = null;
 
-        if(user != null){
+        if (user != null) {
             user_name = user.getDisplayName();
             photoUrl = user.getPhotoUrl();
             email = user.getEmail();
         }
 
-        if (user_name != null){
+        if (user_name != null) {
             name.setText("" + user_name, TextView.BufferType.EDITABLE);
             name.setClickable(false);
-        }
-        else {
+        } else {
             name.setText("", TextView.BufferType.EDITABLE);
             name.setClickable(false);
         }
 
-        if (photoUrl != null){
+        if (photoUrl != null) {
             Glide.with(getApplicationContext()).load(photoUrl.toString()).into(profile_image);
-        }
-        else {
+        } else {
             profile_image.setImageResource(R.drawable.no_profile_pic);
         }
 
         email_view.setText("" + email);
 
-        profile_image_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseImage();
-            }
-        });
+        profile_image_btn.setOnClickListener(view -> chooseImage());
 
-        edit_name_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name.setClickable(true);
-            }
-        });
+        edit_name_btn.setOnClickListener(view -> name.setClickable(true));
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadPic();
-                updateName(name.getText().toString());
-                Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(userProfile.this, DashBoard.class));
-            }
+        save.setOnClickListener(view -> {
+            uploadPic();
+            updateName(name.getText().toString());
+            Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(userProfile.this, DashBoard.class));
         });
 
     }
@@ -136,53 +118,35 @@ public class userProfile extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent , "Select Picture") , PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
     }
 
     private void uploadPic() {
 
-        if (filepath != null){
+        if (filepath != null) {
             final String temp = UUID.randomUUID().toString();
             StorageReference ref = storageReference.child("images/profilePics/" + user.getEmail() + "/" + temp);
-            ref.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            ref.putFile(filepath).addOnSuccessListener(taskSnapshot -> {
 
-                    // Get url to the uploaded content;
-                    Uri imageUrl = taskSnapshot.getDownloadUrl();
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setPhotoUri(imageUrl)
-                            .build();
-                    user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Log.d("up", "User profile updated.");
-                        }
-                    });
+                // Get url to the uploaded content;
+                Uri imageUrl = taskSnapshot.getDownloadUrl();
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setPhotoUri(imageUrl)
+                        .build();
+                user.updateProfile(profileUpdates).addOnCompleteListener(task -> Log.d("up", "User profile updated."));
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(" ", "onFailure: ", e);
-                }
-            });
+            }).addOnFailureListener(e -> Log.d(" ", "onFailure: ", e));
 
         }
 
     }
 
-    private void updateName(String name){
+    private void updateName(String name) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .build();
-        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d("up", "User profile updated.");
-            }
-        });
+        user.updateProfile(profileUpdates).addOnCompleteListener(task -> Log.d("up", "User profile updated."));
     }
 
     @Override
@@ -190,14 +154,13 @@ public class userProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Image set to imageView
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             filepath = data.getData();
-            try{
+            try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
                 profile_image.setImageBitmap(bitmap);
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

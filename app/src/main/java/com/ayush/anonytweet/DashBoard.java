@@ -1,6 +1,5 @@
 package com.ayush.anonytweet;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -49,131 +48,130 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashBoard extends AppCompatActivity {
 
+    private static final int ACTIVITY_DASH_BOARD_LAYOUT = R.layout.activity_dash_board;
+
+    private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
+    private static final int TOOLBAR_ID = R.id.toolbar;
+    private static final int NAV_VIEW_ID = R.id.nav_view;
+    private static final int DRAWER_ID = R.id.drawer;
+    private static final int NAV_HEADER_NAME_ID = R.id.nav_header_name;
+    private static final int NAV_HEADER_IMAGE_ID = R.id.nav_header_image;
+    private static final int MY_RECYCLER_VIEW_ID = R.id.my_recycler_view;
+    private static final int SWIPE_REFRESH_ID = R.id.swipe_refresh;
+
+    private static final int IC_MENU_DRAWABLE = R.drawable.ic_menu;
+    private static final int TWITTER_BIRD_DRAWABLE = R.drawable.twitter_bird;
+
+    private static final int WHITE_COLOR = R.color.white;
+
+    private static final int MENU_MAIN = R.menu.menu_main;
+
+    private final String notificationTweet = "New Tweets";
+    private final String notificationLikes = "New Tweet Updates";
+    private final int notificationTweetId = 1;
+    private final int notificationLikesId = 2;
+    private RecyclerView recycle;
+    private SwipeRefreshLayout refreshLayout;
     private DrawerLayout mDrawerLayout;
     private FirebaseAuth auth;
-
     private ProgressBar circular_progress;
-    RecyclerView recycle;
-    SwipeRefreshLayout refreshLayout;
-
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
-    private List<User> list_user = new ArrayList<>();
-    private List<usersLiked> list_usersLiked = new ArrayList<>();
-
-    public final String notificationTweet = "New Tweets";
-    public final String notificationLikes = "New Tweet Updates";
-    public final int notificationTweetId = 1, notificationLikesId = 2;
+    private final List<User> list_user = new ArrayList<>();
+    private final List<usersLiked> list_usersLiked = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_board);
+        setContentView(ACTIVITY_DASH_BOARD_LAYOUT);
 
-        circular_progress = (ProgressBar) findViewById(R.id.circular_progress);
+        circular_progress = findViewById(CIRCULAR_PROGRESS_ID);
 
         auth = FirebaseAuth.getInstance();
 
         // Adding Toolbar to Main screen
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(TOOLBAR_ID);
         setSupportActionBar(toolbar);
 
         // Create Navigation drawer and inflate layout
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        NavigationView navigationView = findViewById(NAV_VIEW_ID);
+        mDrawerLayout = findViewById(DRAWER_ID);
 
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             VectorDrawableCompat indicator
-                    = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu, getTheme());
-            indicator.setTint(ResourcesCompat.getColor(getResources(),R.color.white,getTheme()));
+                    = VectorDrawableCompat.create(getResources(), IC_MENU_DRAWABLE, getTheme());
+            indicator.setTint(ResourcesCompat.getColor(getResources(), WHITE_COLOR, getTheme()));
             supportActionBar.setHomeAsUpIndicator(indicator);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         // Welcome
         View navHeader = navigationView.getHeaderView(0);
-        TextView nav_header_name = (TextView) navHeader.findViewById(R.id.nav_header_name);
-        CircleImageView nav_header_image = (CircleImageView) navHeader.findViewById(R.id.nav_header_image);
+        TextView nav_header_name = navHeader.findViewById(NAV_HEADER_NAME_ID);
+        CircleImageView nav_header_image = navHeader.findViewById(NAV_HEADER_IMAGE_ID);
         final FirebaseUser user = auth.getCurrentUser();
-        if (auth != null){
+        if (auth != null) {
             nav_header_name.setText(user.getDisplayName());
         }
-        if (user.getPhotoUrl() != null){
+        if (user.getPhotoUrl() != null) {
             Glide.with(getApplicationContext()).load(user.getPhotoUrl().toString()).into(nav_header_image);
         }
 
         // Set behavior of Navigation drawer
+        // This method will trigger on item Click of navigation menu
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    // This method will trigger on item Click of navigation menu
-                    @SuppressLint("ResourceType")
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // Set item in checked state
-                        menuItem.setChecked(true);
+                menuItem -> {
+                    // Set item in checked state
+                    menuItem.setChecked(true);
 
-                        // handle navigation
-                        int id = menuItem.getItemId();
-                        if (id == R.id.nav_change_password){
-                            startActivity(new Intent(DashBoard.this, changePassword.class));
-                        }
-                        else if (id == R.id.bt_logout){
-                            logoutUser();
-                        }
-                        else if (id == R.id.nav_about){
-                            startActivity(new Intent(DashBoard.this, AboutFragment.class));
-                            /*Fragment fragment = new AboutFragment();
-                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.swipe_refresh, fragment);
-                            fragmentTransaction.commit();*/
+                    // handle navigation
+                    int id = menuItem.getItemId();
+                    if (id == R.id.nav_change_password) {
+                        startActivity(new Intent(DashBoard.this, changePassword.class));
+                    } else if (id == R.id.bt_logout) {
+                        logoutUser();
+                    } else if (id == R.id.nav_about) {
+                        startActivity(new Intent(DashBoard.this, AboutFragment.class));
+                        /*Fragment fragment = new AboutFragment();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.swipe_refresh, fragment);
+                        fragmentTransaction.commit();*/
 
-                        }
-                        else if (id == R.id.nav_profile){
-                            startActivity(new Intent(DashBoard.this, userProfile.class));
-                        }
-                        else if (id == R.id.nav_mytweets){
-                            startActivity(new Intent(DashBoard.this, MyTweets.class));
-                        }
-                        else if(id == R.id.nav_myfavourites){
-                            startActivity(new Intent(DashBoard.this, myFavourites.class));
-                        }
-
-                        // Closing drawer on item click
-                        mDrawerLayout.closeDrawers();
-                        return true;
+                    } else if (id == R.id.nav_profile) {
+                        startActivity(new Intent(DashBoard.this, userProfile.class));
+                    } else if (id == R.id.nav_mytweets) {
+                        startActivity(new Intent(DashBoard.this, MyTweets.class));
+                    } else if (id == R.id.nav_myfavourites) {
+                        startActivity(new Intent(DashBoard.this, myFavourites.class));
                     }
+
+                    // Closing drawer on item click
+                    mDrawerLayout.closeDrawers();
+                    return true;
                 });
 
         // Adding Floating Action Button to bottom right of main view
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashBoard.this, Tweet.class);
-                startActivity(intent);
-            }
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(DashBoard.this, Tweet.class);
+            startActivity(intent);
         });
 
         // init firebase database
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference();
 
         //setup Recycler view
-        recycle = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recycle = findViewById(MY_RECYCLER_VIEW_ID);
         addEventFirebaseListener();
 
         //Refresh Layout
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        refreshLayout = findViewById(SWIPE_REFRESH_ID);
         refreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                       addEventFirebaseListener();
-                        refreshLayout.setRefreshing(false);
-                       }
+                () -> {
+                    addEventFirebaseListener();
+                    refreshLayout.setRefreshing(false);
                 }
         );
     }
@@ -195,7 +193,7 @@ public class DashBoard extends AppCompatActivity {
                 if (list_usersLiked.size() > 0)
                     list_usersLiked.clear();
 
-                for (DataSnapshot postSnapshot:dataSnapshot.child("Users").getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
 
                     User user = new User();
                     user.setText(postSnapshot.child("Text ").getValue(String.class));
@@ -208,8 +206,7 @@ public class DashBoard extends AppCompatActivity {
 
                 }
 
-                for (DataSnapshot postSnapshot:dataSnapshot.child("Likes").getChildren())
-                {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Likes").getChildren()) {
                     usersLiked usersLiked = postSnapshot.getValue(com.ayush.anonytweet.Classes.usersLiked.class);
                     list_usersLiked.add(usersLiked);
                 }
@@ -230,44 +227,44 @@ public class DashBoard extends AppCompatActivity {
             }
         });
 
-            mDatabaseReference.child("Users").addChildEventListener(new ChildEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if (!isNotificationPresent(notificationTweetId)){
-                        generateNotification(getApplicationContext(), notificationTweet, notificationTweetId);
-                    }
+        mDatabaseReference.child("Users").addChildEventListener(new ChildEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (!isNotificationPresent(notificationTweetId)) {
+                    generateNotification(getApplicationContext(), notificationTweet, notificationTweetId);
                 }
+            }
 
-                @RequiresApi(api = Build.VERSION_CODES.M)
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    if (!isNotificationPresent(notificationLikesId)){
-                        generateNotification(getApplicationContext(), notificationLikes, notificationLikesId);
-                    }
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                if (!isNotificationPresent(notificationLikesId)) {
+                    generateNotification(getApplicationContext(), notificationLikes, notificationLikesId);
                 }
+            }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                }
+            }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-        }
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(MENU_MAIN, menu);
         return true;
     }
 
@@ -281,18 +278,15 @@ public class DashBoard extends AppCompatActivity {
         if (id == R.id.action_changePass) {
             startActivity(new Intent(DashBoard.this, changePassword.class));
             return true;
-        }
-        else if(id == R.id.action_logOut){
+        } else if (id == R.id.action_logOut) {
             logoutUser();
             return true;
-        }
-        else if (id == R.id.menu_refresh){
+        } else if (id == R.id.menu_refresh) {
             refreshLayout.setRefreshing(true);
             addEventFirebaseListener();
             refreshLayout.setRefreshing(false);
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
@@ -300,9 +294,8 @@ public class DashBoard extends AppCompatActivity {
 
     private void logoutUser() {
         auth.signOut();
-        if(auth.getCurrentUser() == null)
-        {
-            Intent intent = new Intent(DashBoard.this,login.class);
+        if (auth.getCurrentUser() == null) {
+            Intent intent = new Intent(DashBoard.this, login.class);
             intent.putExtra("logout", true);
             startActivity(intent);
             finish();
@@ -315,7 +308,7 @@ public class DashBoard extends AppCompatActivity {
         Intent intent = new Intent(context, DashBoard.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         builder.setContentIntent(pendingIntent);
-        builder.setSmallIcon(R.drawable.twitter_bird);
+        builder.setSmallIcon(TWITTER_BIRD_DRAWABLE);
         builder.setContentTitle("AnonyTweet");
         builder.setContentText(message);
         builder.setSubText("Tap to view");
@@ -323,12 +316,12 @@ public class DashBoard extends AppCompatActivity {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         // Will display the notification in the notification bar
-            notificationManager.notify(notificationId, builder.build());
+        notificationManager.notify(notificationId, builder.build());
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public boolean isNotificationPresent(int notID){
+    private boolean isNotificationPresent(int notID) {
 
         boolean bool = false;
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -344,6 +337,3 @@ public class DashBoard extends AppCompatActivity {
     }
 
 }
-
-
-

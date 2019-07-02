@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 
 public class AboutFragment extends AppCompatActivity {
 
+    private static final int FRAGMENT_ABOUT_LAYOUT = R.layout.fragment_about;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_about);
+        setContentView(FRAGMENT_ABOUT_LAYOUT);
     }
 }
