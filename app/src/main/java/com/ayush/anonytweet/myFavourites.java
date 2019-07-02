@@ -1,12 +1,11 @@
 package com.ayush.anonytweet;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.ayush.anonytweet.Adapter.RecyclerViewAdapter;
-import com.ayush.anonytweet.Adapter.myTweetAdapter;
 import com.ayush.anonytweet.Classes.User;
 import com.ayush.anonytweet.Classes.favTweets;
 import com.ayush.anonytweet.Classes.usersLiked;
@@ -30,19 +28,15 @@ import java.util.List;
 
 public class myFavourites extends AppCompatActivity {
 
+    private RecyclerView recycle;
+    private SwipeRefreshLayout refreshLayout;
     private ProgressBar circular_progress;
-    RecyclerView recycle;
-    SwipeRefreshLayout refreshLayout;
-
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
-    private FirebaseAuth auth;
 
     private String userEmail;
 
-    private List<User> list_user = new ArrayList<>();
-    private List<usersLiked> list_usersLiked = new ArrayList<>();
+    private final List<User> list_user = new ArrayList<>();
+    private final List<usersLiked> list_usersLiked = new ArrayList<>();
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -55,21 +49,18 @@ public class myFavourites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_favourites);
 
-        circular_progress = (ProgressBar) findViewById(R.id.circular_progress_myfavourites);
+        circular_progress = findViewById(R.id.circular_progress_myfavourites);
 
         // Adding Toolbar to Main screen
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_myfavourites);
+        Toolbar toolbar = findViewById(R.id.toolbar_myfavourites);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         //toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         //toolbar.setTitle("My Tweets");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //startActivity(new Intent(getApplicationContext(), DashBoard.class));
-                onSupportNavigateUp();
-            }
+        toolbar.setNavigationOnClickListener(view -> {
+            //startActivity(new Intent(getApplicationContext(), DashBoard.class));
+            onSupportNavigateUp();
         });
 
         // Adding menu icon to Toolbar
@@ -77,34 +68,31 @@ public class myFavourites extends AppCompatActivity {
         if (supportActionBar != null) {
             VectorDrawableCompat indicator
                     = VectorDrawableCompat.create(getResources(), R.drawable.ic_arrow_back_white, getTheme());
-            indicator.setTint(ResourcesCompat.getColor(getResources(),R.color.white,getTheme()));
+            indicator.setTint(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
             supportActionBar.setHomeAsUpIndicator(indicator);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         // init firebase database
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference();
 
         //Firebase auth
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         //getting userEmail
         userEmail = auth.getCurrentUser().getEmail();
 
         //setup Recycler view
-        recycle = (RecyclerView) findViewById(R.id.my_recycler_view_myfavourites);
+        recycle = findViewById(R.id.my_recycler_view_myfavourites);
         addEventFirebaseListener();
 
         //Refresh Layout
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_myfavourites);
+        refreshLayout = findViewById(R.id.swipe_refresh_myfavourites);
         refreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        addEventFirebaseListener();
-                        refreshLayout.setRefreshing(false);
-                    }
+                () -> {
+                    addEventFirebaseListener();
+                    refreshLayout.setRefreshing(false);
                 }
         );
 
@@ -126,11 +114,11 @@ public class myFavourites extends AppCompatActivity {
                     list_usersLiked.clear();
 
                 favTweets favTweets = dataSnapshot.child("Favourites").child(FirebaseAuth.getInstance().getUid()).getValue(com.ayush.anonytweet.Classes.favTweets.class);
-                if (favTweets == null){
+                if (favTweets == null) {
                     favTweets = new favTweets();
                 }
 
-                for (DataSnapshot postSnapshot:dataSnapshot.child("Users").getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
 
                     User user = new User();
                     user.setText(postSnapshot.child("Text ").getValue(String.class));
@@ -139,9 +127,9 @@ public class myFavourites extends AppCompatActivity {
                     if (postSnapshot.child("Number of Likes").getValue(String.class) != null)
                         user.setNo_of_likes(Integer.parseInt(postSnapshot.child("Number of Likes").getValue(String.class)));
                     user.setData_id(postSnapshot.child("Data Id").getValue(String.class));
-                    if(favTweets != null){
-                        for (int i = 0; i < favTweets.getTweetIds().size(); i++){
-                            if(user != null && user.getData_id() != null && user.getData_id().equals(favTweets.getTweetIds().get(i)))
+                    if (favTweets != null) {
+                        for (int i = 0; i < favTweets.getTweetIds().size(); i++) {
+                            if (user != null && user.getData_id() != null && user.getData_id().equals(favTweets.getTweetIds().get(i)))
                                 list_user.add(user);
                         }
                     }
@@ -149,17 +137,15 @@ public class myFavourites extends AppCompatActivity {
                 }
 
                 int temp = 0;
-                for (DataSnapshot postSnapshot:dataSnapshot.child("Likes").getChildren())
-                {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Likes").getChildren()) {
                     usersLiked usersLiked = postSnapshot.getValue(com.ayush.anonytweet.Classes.usersLiked.class);
-                    if (temp < list_user.size() - 1){
-                        if (list_user.size() != 0 && usersLiked != null && list_user.get(temp).getData_id().equals(usersLiked.getTweetId()) == true){
+                    if (temp < list_user.size() - 1) {
+                        if (list_user.size() != 0 && usersLiked != null && list_user.get(temp).getData_id().equals(usersLiked.getTweetId())) {
                             list_usersLiked.add(usersLiked);
                             temp++;
                         }
-                    }
-                    else if (temp == list_user.size() - 1){
-                        if (list_user.size() != 0 && usersLiked != null && usersLiked.getTweetId() != null && list_user.get(temp).getData_id().equals(usersLiked.getTweetId()) == true){
+                    } else if (temp == list_user.size() - 1) {
+                        if (list_user.size() != 0 && usersLiked != null && usersLiked.getTweetId() != null && list_user.get(temp).getData_id().equals(usersLiked.getTweetId())) {
                             list_usersLiked.add(usersLiked);
                             temp = 0;
                         }

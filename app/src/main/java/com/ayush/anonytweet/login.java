@@ -1,13 +1,9 @@
 package com.ayush.anonytweet;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +17,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -30,18 +27,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class login extends AppCompatActivity implements View.OnClickListener {
@@ -49,16 +39,18 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 9001;
 
-    Button btnLogin;
-    EditText input_email,input_password;
-    TextView btnSignup,btnForgotPass;
-    SignInButton googleBut;
-    LoginButton fb_login;
+    private Button btnLogin;
+    private EditText input_email;
+    private EditText input_password;
+    private TextView btnSignup;
+    private TextView btnForgotPass;
+    private SignInButton googleBut;
+    private LoginButton fb_login;
 
     //Progress Bar
-    ProgressBar circularProgressBar;
+    private ProgressBar circularProgressBar;
 
-    RelativeLayout activity_main;
+    private RelativeLayout activity_main;
 
     // [START declare_auth]
     private FirebaseAuth auth;
@@ -77,17 +69,17 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         // progress bar init;
-        circularProgressBar = (ProgressBar) findViewById(R.id.circular_progress);
+        circularProgressBar = findViewById(R.id.circular_progress);
 
         //View
-        btnLogin = (Button)findViewById(R.id.login_btn_login);
-        input_email = (EditText)findViewById(R.id.login_email);
-        input_password = (EditText)findViewById(R.id.login_password);
-        btnSignup = (TextView)findViewById(R.id.login_btn_signup);
-        btnForgotPass = (TextView)findViewById(R.id.login_btn_forgot_password);
-        activity_main = (RelativeLayout)findViewById(R.id.activity_main);
-        googleBut = (SignInButton) findViewById(R.id.googleBut);
-        fb_login = (LoginButton) findViewById(R.id.fb_login_button);
+        btnLogin = findViewById(R.id.login_btn_login);
+        input_email = findViewById(R.id.login_email);
+        input_password = findViewById(R.id.login_password);
+        btnSignup = findViewById(R.id.login_btn_signup);
+        btnForgotPass = findViewById(R.id.login_btn_forgot_password);
+        activity_main = findViewById(R.id.activity_main);
+        googleBut = findViewById(R.id.googleBut);
+        fb_login = findViewById(R.id.fb_login_button);
 
         btnSignup.setOnClickListener(this);
         btnForgotPass.setOnClickListener(this);
@@ -95,7 +87,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         googleBut.setOnClickListener(this);
 
         //After logout, logout facebook account
-        if (getIntent().hasExtra("logout")){
+        if (getIntent().hasExtra("logout")) {
             LoginManager.getInstance().logOut();
         }
 
@@ -140,8 +132,8 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         super.onStart();
 
         //Check already session , if ok-> DashBoard
-        if(auth.getCurrentUser() != null)
-            startActivity(new Intent(login.this,DashBoard.class));
+        if (auth.getCurrentUser() != null)
+            startActivity(new Intent(login.this, DashBoard.class));
 
     }
     // [END on_start_check_user]
@@ -179,24 +171,21 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            circularProgressBar.setVisibility(View.INVISIBLE);
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            startActivity(new Intent(login.this, DashBoard.class));
-                        } else {
-                            circularProgressBar.setVisibility(View.INVISIBLE);
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        circularProgressBar.setVisibility(View.INVISIBLE);
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success");
+                        startActivity(new Intent(login.this, DashBoard.class));
+                    } else {
+                        circularProgressBar.setVisibility(View.INVISIBLE);
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(login.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
+
+                    // ...
                 });
     }
 
@@ -212,31 +201,24 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         } else if (view.getId() == R.id.login_btn_login) {
             circularProgressBar.setVisibility(View.VISIBLE);
             loginUser(input_email.getText().toString(), input_password.getText().toString());
-        }
-        else if (view.getId() == R.id.googleBut){
+        } else if (view.getId() == R.id.googleBut) {
             circularProgressBar.setVisibility(View.VISIBLE);
             signIn();
         }
     }
 
     private void loginUser(String email, final String password) {
-        auth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful())
-                        {
-                            if(password.length() < 6)
-                            {
-                                circularProgressBar.setVisibility(View.INVISIBLE);
-                                Snackbar snackBar = Snackbar.make(activity_main,"Password length must be over 6",Snackbar.LENGTH_SHORT);
-                                snackBar.show();
-                            }
-                        }
-                        else{
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (!task.isSuccessful()) {
+                        if (password.length() < 6) {
                             circularProgressBar.setVisibility(View.INVISIBLE);
-                            startActivity(new Intent(login.this,DashBoard.class));
+                            Snackbar snackBar = Snackbar.make(activity_main, "Password length must be over 6", Snackbar.LENGTH_SHORT);
+                            snackBar.show();
                         }
+                    } else {
+                        circularProgressBar.setVisibility(View.INVISIBLE);
+                        startActivity(new Intent(login.this, DashBoard.class));
                     }
                 });
     }
@@ -247,20 +229,17 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success");
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(login.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
+
                 });
     }
 // [END auth_with_facebook]

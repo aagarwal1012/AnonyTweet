@@ -1,11 +1,8 @@
 package com.ayush.anonytweet;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.daimajia.androidanimations.library.Techniques;
-import com.facebook.login.Login;
 import com.google.firebase.database.FirebaseDatabase;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
