@@ -12,13 +12,21 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 public class ForgotPassword extends AppCompatActivity implements View.OnClickListener {
 
+    @LayoutRes
     private static final int ACTIVITY_FORGOT_PASSWORD_LAYOUT = R.layout.activity_forgot_password;
 
+    @IdRes
     private static final int FORGOT_EMAIL_ID = R.id.forgot_email;
+    @IdRes
     private static final int FORGOT_BTN_RESET_ID = R.id.forgot_btn_reset;
+    @IdRes
     private static final int FORGOT_BTN_BACK_ID = R.id.forgot_btn_back;
+    @IdRes
     private static final int ACTIVITY_FORGOT_PASSWORD_ID = R.id.activity_forgot_password;
 
     private EditText input_email;
@@ -47,7 +55,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
+        @IdRes int id = view.getId();
         if (id == R.id.forgot_btn_back) {
             startActivity(new Intent(this, login.class));
             finish();

@@ -23,27 +23,36 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class myFavourites extends AppCompatActivity {
 
+    @LayoutRes
     private static final int ACTIVITY_MY_FAVOURITES_LAYOUT = R.layout.activity_my_favourites;
 
+    @IdRes
     private static final int CIRCULAR_PROGRESS_MYFAVOURITES_ID = R.id.circular_progress_myfavourites;
+    @IdRes
     private static final int TOOLBAR_MYFAVOURITES_ID = R.id.toolbar_myfavourites;
+    @IdRes
     private static final int IC_ARROW_BACK_WHITE_DRAWABLE = R.drawable.ic_arrow_back_white;
+    @IdRes
     private static final int WHITE_COLOR = R.color.white;
+    @IdRes
     private static final int MY_RECYCLER_VIEW_MYFAVOURITES_ID = R.id.my_recycler_view_myfavourites;
+    @IdRes
     private static final int SWIPE_REFRESH_MYFAVOURITES_ID = R.id.swipe_refresh_myfavourites;
 
+    private final List<User> list_user = new ArrayList<>();
+    private final List<usersLiked> list_usersLiked = new ArrayList<>();
     private RecyclerView recycle;
     private SwipeRefreshLayout refreshLayout;
     private ProgressBar circular_progress;
     private DatabaseReference mDatabaseReference;
-
-    private final List<User> list_user = new ArrayList<>();
-    private final List<usersLiked> list_usersLiked = new ArrayList<>();
 
     @Override
     public boolean onSupportNavigateUp() {

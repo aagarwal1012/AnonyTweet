@@ -21,6 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +31,27 @@ import java.util.UUID;
 
 public class Tweet extends AppCompatActivity {
 
+    @LayoutRes
     private static final int ACTIVITY_TWEET_LAYOUT = R.layout.activity_tweet;
 
+    @IdRes
     private static final int SELECTED_IMAGE_ID = R.id.selectedImage;
+    @IdRes
     private static final int INPUT_TEXT_ID = R.id.input_text;
+    @IdRes
     private static final int CHOOSE_IMAGE_ID = R.id.chooseImage;
+    @IdRes
     private static final int BTN_TWEET_ID = R.id.btn_tweet;
+    @IdRes
     private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
 
     private final int PICK_IMAGE_REQUEST = 7;
     private final String TAG = "Tweet";
-
+    private final List<String> likedUsers = new ArrayList<>();
     private ImageView selectedImage;
     private TextView text;
     private Button chooseImage;
     private Button tweet;
-    private final List<String> likedUsers = new ArrayList<>();
     private String dataId;
     private Uri imageUrl;
     private FirebaseUser user;

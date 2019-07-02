@@ -14,21 +14,33 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 public class postComments extends AppCompatActivity {
 
+    @LayoutRes
     private static final int ACTIVITY_POST_COMMENTS_LAYOUT = R.layout.activity_post_comments;
 
+    @IdRes
     private static final int ACTIVITY_MAIN_ID = R.id.activity_main;
+    @IdRes
     private static final int EMOJI_BUTTON_ID = R.id.emoji_button;
+    @IdRes
     private static final int SUBMIT_BUTTON_ID = R.id.submit_button;
+    @IdRes
     private static final int EMOJICON_EDIT_TEXT_ID = R.id.emojicon_edit_text;
+    @IdRes
     private static final int LIST_OF_MESSAGE_ID = R.id.list_of_message;
+    @IdRes
     private static final int MESSAGE_TEXT_ID = R.id.message_text;
+    @IdRes
     private static final int MESSAGE_USER_ID = R.id.message_user;
+    @IdRes
     private static final int MESSAGE_TIME_ID = R.id.message_time;
 
     private RelativeLayout activity_post_comments;

@@ -13,16 +13,27 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
+    @LayoutRes
     private static final int ACTIVITY_SIGN_UP_LAYOUT = R.layout.activity_sign_up;
 
+    @IdRes
     private static final int SIGNUP_BTN_REGISTER_ID = R.id.signup_btn_register;
+    @IdRes
     private static final int SIGNUP_BTN_LOGIN_ID = R.id.signup_btn_login;
+    @IdRes
     private static final int SIGNUP_BTN_FORGOT_PASS_ID = R.id.signup_btn_forgot_pass;
+    @IdRes
     private static final int SIGNUP_EMAIL_ID = R.id.signup_email;
+    @IdRes
     private static final int SIGNUP_PASSWORD_ID = R.id.signup_password;
+    @IdRes
     private static final int SIGNUP_NAME_ID = R.id.signup_name;
+    @IdRes
     private static final int ACTIVITY_SIGN_UP_ID = R.id.activity_sign_up;
 
     private Button btnSignup;

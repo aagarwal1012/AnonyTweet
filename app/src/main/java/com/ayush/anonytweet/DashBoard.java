@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -41,6 +42,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.androidresource.qual.ColorRes;
+import org.checkerframework.checker.androidresource.qual.DrawableRes;
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.MenuRes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,36 +54,49 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashBoard extends AppCompatActivity {
 
+    @LayoutRes
     private static final int ACTIVITY_DASH_BOARD_LAYOUT = R.layout.activity_dash_board;
 
+    @IdRes
     private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
+    @IdRes
     private static final int TOOLBAR_ID = R.id.toolbar;
+    @IdRes
     private static final int NAV_VIEW_ID = R.id.nav_view;
+    @IdRes
     private static final int DRAWER_ID = R.id.drawer;
+    @IdRes
     private static final int NAV_HEADER_NAME_ID = R.id.nav_header_name;
+    @IdRes
     private static final int NAV_HEADER_IMAGE_ID = R.id.nav_header_image;
+    @IdRes
     private static final int MY_RECYCLER_VIEW_ID = R.id.my_recycler_view;
+    @IdRes
     private static final int SWIPE_REFRESH_ID = R.id.swipe_refresh;
 
+    @DrawableRes
     private static final int IC_MENU_DRAWABLE = R.drawable.ic_menu;
+    @DrawableRes
     private static final int TWITTER_BIRD_DRAWABLE = R.drawable.twitter_bird;
 
+    @ColorRes
     private static final int WHITE_COLOR = R.color.white;
 
+    @MenuRes
     private static final int MENU_MAIN = R.menu.menu_main;
 
     private final String notificationTweet = "New Tweets";
     private final String notificationLikes = "New Tweet Updates";
     private final int notificationTweetId = 1;
     private final int notificationLikesId = 2;
+    private final List<User> list_user = new ArrayList<>();
+    private final List<usersLiked> list_usersLiked = new ArrayList<>();
     private RecyclerView recycle;
     private SwipeRefreshLayout refreshLayout;
     private DrawerLayout mDrawerLayout;
     private FirebaseAuth auth;
     private ProgressBar circular_progress;
     private DatabaseReference mDatabaseReference;
-    private final List<User> list_user = new ArrayList<>();
-    private final List<usersLiked> list_usersLiked = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +145,7 @@ public class DashBoard extends AppCompatActivity {
                     menuItem.setChecked(true);
 
                     // handle navigation
-                    int id = menuItem.getItemId();
+                    @IdRes int id = menuItem.getItemId();
                     if (id == R.id.nav_change_password) {
                         startActivity(new Intent(DashBoard.this, changePassword.class));
                     } else if (id == R.id.bt_logout) {
@@ -273,7 +292,7 @@ public class DashBoard extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        @IdRes int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_changePass) {
             startActivity(new Intent(DashBoard.this, changePassword.class));

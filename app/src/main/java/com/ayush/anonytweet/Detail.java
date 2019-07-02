@@ -11,16 +11,25 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 public class Detail extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
 
+    @LayoutRes
     private static final int ACTIVITY_DETAIL_LAYOUT = R.layout.activity_detail;
 
+    @IdRes
     private static final int TOOLBAR_ID = R.id.toolbar;
+    @IdRes
     private static final int COLLAPSING_TOOLBAR_ID = R.id.collapsing_toolbar;
+    @IdRes
     private static final int VIEW_MESSAGE_ID = R.id.view_message;
+    @IdRes
     private static final int CIRCULAR_PROGRESS_DETAIL_ID = R.id.circular_progress_detail;
+    @IdRes
     private static final int IMAGE_ID = R.id.image;
 
     @Override
