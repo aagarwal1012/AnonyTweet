@@ -42,27 +42,17 @@ public class login extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 9001;
 
-    @LayoutRes
-    private static final int ACTIVITY_LOGIN_LAYOUT = R.layout.activity_login;
+    private static final @LayoutRes int ACTIVITY_LOGIN_LAYOUT = R.layout.activity_login;
 
-    @IdRes
-    private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
-    @IdRes
-    private static final int LOGIN_BTN_LOGIN_ID = R.id.login_btn_login;
-    @IdRes
-    private static final int LOGIN_EMAIL_ID = R.id.login_email;
-    @IdRes
-    private static final int LOGIN_PASSWORD_ID = R.id.login_password;
-    @IdRes
-    private static final int LOGIN_BTN_SIGNUP_ID = R.id.login_btn_signup;
-    @IdRes
-    private static final int LOGIN_BTN_FORGOT_PASSWORD_ID = R.id.login_btn_forgot_password;
-    @IdRes
-    private static final int ACTIVITY_MAIN_ID = R.id.activity_main;
-    @IdRes
-    private static final int GOOGLE_BUT_ID = R.id.googleBut;
-    @IdRes
-    private static final int FB_LOGIN_BUTTON_ID = R.id.fb_login_button;
+    private static final @IdRes int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
+    private static final @IdRes int LOGIN_BTN_LOGIN_ID = R.id.login_btn_login;
+    private static final @IdRes int LOGIN_EMAIL_ID = R.id.login_email;
+    private static final @IdRes int LOGIN_PASSWORD_ID = R.id.login_password;
+    private static final @IdRes int LOGIN_BTN_SIGNUP_ID = R.id.login_btn_signup;
+    private static final @IdRes int LOGIN_BTN_FORGOT_PASSWORD_ID = R.id.login_btn_forgot_password;
+    private static final @IdRes int ACTIVITY_MAIN_ID = R.id.activity_main;
+    private static final @IdRes int GOOGLE_BUT_ID = R.id.googleBut;
+    private static final @IdRes int FB_LOGIN_BUTTON_ID = R.id.fb_login_button;
 
     private Button btnLogin;
     private EditText input_email;

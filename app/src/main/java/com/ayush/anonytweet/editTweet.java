@@ -29,17 +29,12 @@ public class editTweet extends AppCompatActivity {
 
     private final static int PICK_IMAGE_REQUEST = 106;
 
-    @LayoutRes
-    private static final int ACTIVITY_EDIT_TWEET_LAYOUT = R.layout.activity_edit_tweet;
+    private static final @LayoutRes int ACTIVITY_EDIT_TWEET_LAYOUT = R.layout.activity_edit_tweet;
 
-    @IdRes
-    private static final int TWEET_IMAGE_ID = R.id.tweet_image;
-    @IdRes
-    private static final int EDIT_IMAGE_BTN_ID = R.id.edit_image_btn;
-    @IdRes
-    private static final int EDIT_TWEET_ID = R.id.edit_tweet;
-    @IdRes
-    private static final int BTN_SAVE_ID = R.id.btn_save;
+    private static final @IdRes int TWEET_IMAGE_ID = R.id.tweet_image;
+    private static final @IdRes int EDIT_IMAGE_BTN_ID = R.id.edit_image_btn;
+    private static final @IdRes int EDIT_TWEET_ID = R.id.edit_tweet;
+    private static final @IdRes int BTN_SAVE_ID = R.id.btn_save;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;

@@ -31,21 +31,14 @@ import java.util.List;
 
 public class myFavourites extends AppCompatActivity {
 
-    @LayoutRes
-    private static final int ACTIVITY_MY_FAVOURITES_LAYOUT = R.layout.activity_my_favourites;
+    private static final @LayoutRes int ACTIVITY_MY_FAVOURITES_LAYOUT = R.layout.activity_my_favourites;
 
-    @IdRes
-    private static final int CIRCULAR_PROGRESS_MYFAVOURITES_ID = R.id.circular_progress_myfavourites;
-    @IdRes
-    private static final int TOOLBAR_MYFAVOURITES_ID = R.id.toolbar_myfavourites;
-    @IdRes
-    private static final int IC_ARROW_BACK_WHITE_DRAWABLE = R.drawable.ic_arrow_back_white;
-    @IdRes
-    private static final int WHITE_COLOR = R.color.white;
-    @IdRes
-    private static final int MY_RECYCLER_VIEW_MYFAVOURITES_ID = R.id.my_recycler_view_myfavourites;
-    @IdRes
-    private static final int SWIPE_REFRESH_MYFAVOURITES_ID = R.id.swipe_refresh_myfavourites;
+    private static final @IdRes int CIRCULAR_PROGRESS_MYFAVOURITES_ID = R.id.circular_progress_myfavourites;
+    private static final @IdRes int TOOLBAR_MYFAVOURITES_ID = R.id.toolbar_myfavourites;
+    private static final @IdRes int IC_ARROW_BACK_WHITE_DRAWABLE = R.drawable.ic_arrow_back_white;
+    private static final @IdRes int WHITE_COLOR = R.color.white;
+    private static final @IdRes int MY_RECYCLER_VIEW_MYFAVOURITES_ID = R.id.my_recycler_view_myfavourites;
+    private static final @IdRes int SWIPE_REFRESH_MYFAVOURITES_ID = R.id.swipe_refresh_myfavourites;
 
     private final List<User> list_user = new ArrayList<>();
     private final List<usersLiked> list_usersLiked = new ArrayList<>();

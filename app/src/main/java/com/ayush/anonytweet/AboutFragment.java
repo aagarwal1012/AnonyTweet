@@ -8,8 +8,7 @@ import org.checkerframework.checker.androidresource.qual.LayoutRes;
 
 public class AboutFragment extends AppCompatActivity {
 
-    @LayoutRes
-    private static final int FRAGMENT_ABOUT_LAYOUT = R.layout.fragment_about;
+    private static final @LayoutRes int FRAGMENT_ABOUT_LAYOUT = R.layout.fragment_about;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -40,22 +40,15 @@ import static android.content.ContentValues.TAG;
 
 public class myTweetAdapter extends RecyclerView.Adapter<myTweetAdapter.MyHolder> {
 
-    @IdRes
-    public static final int ITEM_CARD_ID = R.layout.item_card;
-    @IdRes
-    public static final int CARD_IMAGE_ID = R.id.card_image;
-    @IdRes
-    public static final int CARD_TEXT_ID = R.id.card_text;
-    @IdRes
-    public static final int LIKE_VIEW_ID = R.id.like_view;
-    @IdRes
-    public static final int THUMB_BUTTON_ID = R.id.thumb_button;
-    @IdRes
-    public static final int CARD_FAV_BUTTON_ID = R.id.card_fav_button;
-    @IdRes
-    public static final int CARD_USER_NAME_ID = R.id.card_userName;
-    @IdRes
-    public static final int CARD_COMMENTS_ID = R.id.card_comments;
+
+    public static final @IdRes int ITEM_CARD_ID = R.layout.item_card;
+    public static final @IdRes int CARD_IMAGE_ID = R.id.card_image;
+    public static final @IdRes int CARD_TEXT_ID = R.id.card_text;
+    public static final @IdRes int LIKE_VIEW_ID = R.id.like_view;
+    public static final @IdRes int THUMB_BUTTON_ID = R.id.thumb_button;
+    public static final @IdRes int CARD_FAV_BUTTON_ID = R.id.card_fav_button;
+    public static final @IdRes int CARD_USER_NAME_ID = R.id.card_userName;
+    public static final @IdRes int CARD_COMMENTS_ID = R.id.card_comments;
 
     private final List<usersLiked> usersLiked;
     private final favTweets favTweets;

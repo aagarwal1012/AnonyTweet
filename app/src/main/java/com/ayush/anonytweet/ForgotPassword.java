@@ -17,17 +17,12 @@ import org.checkerframework.checker.androidresource.qual.LayoutRes;
 
 public class ForgotPassword extends AppCompatActivity implements View.OnClickListener {
 
-    @LayoutRes
-    private static final int ACTIVITY_FORGOT_PASSWORD_LAYOUT = R.layout.activity_forgot_password;
+    private static final @LayoutRes int ACTIVITY_FORGOT_PASSWORD_LAYOUT = R.layout.activity_forgot_password;
 
-    @IdRes
-    private static final int FORGOT_EMAIL_ID = R.id.forgot_email;
-    @IdRes
-    private static final int FORGOT_BTN_RESET_ID = R.id.forgot_btn_reset;
-    @IdRes
-    private static final int FORGOT_BTN_BACK_ID = R.id.forgot_btn_back;
-    @IdRes
-    private static final int ACTIVITY_FORGOT_PASSWORD_ID = R.id.activity_forgot_password;
+    private static final @IdRes int FORGOT_EMAIL_ID = R.id.forgot_email;
+    private static final @IdRes int FORGOT_BTN_RESET_ID = R.id.forgot_btn_reset;
+    private static final @IdRes int FORGOT_BTN_BACK_ID = R.id.forgot_btn_back;
+    private static final @IdRes int ACTIVITY_FORGOT_PASSWORD_ID = R.id.activity_forgot_password;
 
     private EditText input_email;
     private RelativeLayout activity_forgot;

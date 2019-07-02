@@ -23,25 +23,16 @@ import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 
 public class postComments extends AppCompatActivity {
 
-    @LayoutRes
-    private static final int ACTIVITY_POST_COMMENTS_LAYOUT = R.layout.activity_post_comments;
+    private static final @LayoutRes int ACTIVITY_POST_COMMENTS_LAYOUT = R.layout.activity_post_comments;
 
-    @IdRes
-    private static final int ACTIVITY_MAIN_ID = R.id.activity_main;
-    @IdRes
-    private static final int EMOJI_BUTTON_ID = R.id.emoji_button;
-    @IdRes
-    private static final int SUBMIT_BUTTON_ID = R.id.submit_button;
-    @IdRes
-    private static final int EMOJICON_EDIT_TEXT_ID = R.id.emojicon_edit_text;
-    @IdRes
-    private static final int LIST_OF_MESSAGE_ID = R.id.list_of_message;
-    @IdRes
-    private static final int MESSAGE_TEXT_ID = R.id.message_text;
-    @IdRes
-    private static final int MESSAGE_USER_ID = R.id.message_user;
-    @IdRes
-    private static final int MESSAGE_TIME_ID = R.id.message_time;
+    private static final @IdRes int ACTIVITY_MAIN_ID = R.id.activity_main;
+    private static final @IdRes int EMOJI_BUTTON_ID = R.id.emoji_button;
+    private static final @IdRes int SUBMIT_BUTTON_ID = R.id.submit_button;
+    private static final @IdRes int EMOJICON_EDIT_TEXT_ID = R.id.emojicon_edit_text;
+    private static final @IdRes int LIST_OF_MESSAGE_ID = R.id.list_of_message;
+    private static final @IdRes int MESSAGE_TEXT_ID = R.id.message_text;
+    private static final @IdRes int MESSAGE_USER_ID = R.id.message_user;
+    private static final @IdRes int MESSAGE_TIME_ID = R.id.message_time;
 
     private RelativeLayout activity_post_comments;
     //Add Emojicon

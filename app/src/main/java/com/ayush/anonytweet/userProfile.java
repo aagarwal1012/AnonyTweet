@@ -32,21 +32,14 @@ public class userProfile extends AppCompatActivity {
 
     private final static int PICK_IMAGE_REQUEST = 10;
 
-    @LayoutRes
-    private static final int ACTIVITY_USER_PROFILE_LAYOUT = R.layout.activity_user_profile;
+    private static final @LayoutRes int ACTIVITY_USER_PROFILE_LAYOUT = R.layout.activity_user_profile;
 
-    @IdRes
-    private static final int PROFILE_IMAGE_ID = R.id.profile_image;
-    @IdRes
-    private static final int PROFILE_IMAGE_BTN_ID = R.id.profile_image_btn;
-    @IdRes
-    private static final int NAME_BTN_ID = R.id.name_btn;
-    @IdRes
-    private static final int EMAIL_ID = R.id.email;
-    @IdRes
-    private static final int NAME_ID = R.id.name;
-    @IdRes
-    private static final int BTN_SAVE_ID = R.id.btn_save;
+    private static final @IdRes int PROFILE_IMAGE_ID = R.id.profile_image;
+    private static final @IdRes int PROFILE_IMAGE_BTN_ID = R.id.profile_image_btn;
+    private static final @IdRes int NAME_BTN_ID = R.id.name_btn;
+    private static final @IdRes int EMAIL_ID = R.id.email;
+    private static final @IdRes int NAME_ID = R.id.name;
+    private static final @IdRes int BTN_SAVE_ID = R.id.btn_save;
 
     private ImageView profile_image;
     private ImageView profile_image_btn;

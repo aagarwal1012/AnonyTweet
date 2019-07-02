@@ -31,19 +31,13 @@ import java.util.UUID;
 
 public class Tweet extends AppCompatActivity {
 
-    @LayoutRes
-    private static final int ACTIVITY_TWEET_LAYOUT = R.layout.activity_tweet;
+    private static final @LayoutRes int ACTIVITY_TWEET_LAYOUT = R.layout.activity_tweet;
 
-    @IdRes
-    private static final int SELECTED_IMAGE_ID = R.id.selectedImage;
-    @IdRes
-    private static final int INPUT_TEXT_ID = R.id.input_text;
-    @IdRes
-    private static final int CHOOSE_IMAGE_ID = R.id.chooseImage;
-    @IdRes
-    private static final int BTN_TWEET_ID = R.id.btn_tweet;
-    @IdRes
-    private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
+    private static final @IdRes int SELECTED_IMAGE_ID = R.id.selectedImage;
+    private static final @IdRes int INPUT_TEXT_ID = R.id.input_text;
+    private static final @IdRes int CHOOSE_IMAGE_ID = R.id.chooseImage;
+    private static final @IdRes int BTN_TWEET_ID = R.id.btn_tweet;
+    private static final @IdRes int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
 
     private final int PICK_IMAGE_REQUEST = 7;
     private final String TAG = "Tweet";

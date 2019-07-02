@@ -54,36 +54,26 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashBoard extends AppCompatActivity {
 
-    @LayoutRes
-    private static final int ACTIVITY_DASH_BOARD_LAYOUT = R.layout.activity_dash_board;
+    private static final @LayoutRes
+    int ACTIVITY_DASH_BOARD_LAYOUT = R.layout.activity_dash_board;
 
-    @IdRes
-    private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
-    @IdRes
-    private static final int TOOLBAR_ID = R.id.toolbar;
-    @IdRes
-    private static final int NAV_VIEW_ID = R.id.nav_view;
-    @IdRes
-    private static final int DRAWER_ID = R.id.drawer;
-    @IdRes
-    private static final int NAV_HEADER_NAME_ID = R.id.nav_header_name;
-    @IdRes
-    private static final int NAV_HEADER_IMAGE_ID = R.id.nav_header_image;
-    @IdRes
-    private static final int MY_RECYCLER_VIEW_ID = R.id.my_recycler_view;
-    @IdRes
-    private static final int SWIPE_REFRESH_ID = R.id.swipe_refresh;
 
-    @DrawableRes
+    private static final @IdRes int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
+
+    private static final @IdRes int TOOLBAR_ID = R.id.toolbar;
+    private static final @IdRes int NAV_VIEW_ID = R.id.nav_view;
+    private static final @IdRes int DRAWER_ID = R.id.drawer;
+    private static final @IdRes int NAV_HEADER_NAME_ID = R.id.nav_header_name;
+    private static final @IdRes int NAV_HEADER_IMAGE_ID = R.id.nav_header_image;
+    private static final @IdRes int MY_RECYCLER_VIEW_ID = R.id.my_recycler_view;
+    private static final @IdRes int SWIPE_REFRESH_ID = R.id.swipe_refresh;
     private static final int IC_MENU_DRAWABLE = R.drawable.ic_menu;
-    @DrawableRes
-    private static final int TWITTER_BIRD_DRAWABLE = R.drawable.twitter_bird;
 
-    @ColorRes
-    private static final int WHITE_COLOR = R.color.white;
+    private static final @DrawableRes int TWITTER_BIRD_DRAWABLE = R.drawable.twitter_bird;
 
-    @MenuRes
-    private static final int MENU_MAIN = R.menu.menu_main;
+    private static final @ColorRes int WHITE_COLOR = R.color.white;
+
+    private static final @MenuRes int MENU_MAIN = R.menu.menu_main;
 
     private final String notificationTweet = "New Tweets";
     private final String notificationLikes = "New Tweet Updates";
