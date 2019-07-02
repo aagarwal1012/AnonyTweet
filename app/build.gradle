@@ -24,6 +24,24 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        checkTypes {
+            javaCompileOptions.annotationProcessorOptions.
+                    classNames.add("org.checkerframework.checker.androidresource.AndroidResourceChecker")
+            // You can pass options like so:
+            // javaCompileOptions.annotationProcessorOptions.arguments.put("warns", "")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+configurations {
+    checkerFrameworkAnnotatedJDK {
+        description = 'a copy of JDK classes with Checker Framework type qualifers inserted'
     }
 }
 
@@ -49,22 +67,20 @@ dependencies {
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     compile 'com.firebaseui:firebase-ui:0.6.2'
     compile 'com.github.hani-momanii:SuperNova-Emoji:1.0'
+
+    implementation files('E:/gsoc-2019/The-Checker-Framework/checker-framework/checker/dist/checker-qual.jar')
+    annotationProcessor files('E:/gsoc-2019/The-Checker-Framework/checker-framework/checker/dist/checker.jar')
+    checkerFrameworkAnnotatedJDK files('E:/gsoc-2019/The-Checker-Framework/checker-framework/checker/dist/jdk8.jar')
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile).all { compile ->
+        if (compile.name.contains("CheckTypes")) {
+            compile.options.compilerArgs += [
+                    "-Xbootclasspath/p:${configurations.checkerFrameworkAnnotatedJDK.asPath}"
+            ]
+        }
+    }
+}
 
 apply plugin: 'com.google.gms.google-services'
