@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.androidresource.qual.ColorRes;
+import org.checkerframework.checker.androidresource.qual.DrawableRes;
 import org.checkerframework.checker.androidresource.qual.IdRes;
 import org.checkerframework.checker.androidresource.qual.LayoutRes;
 
@@ -35,8 +37,8 @@ public class myFavourites extends AppCompatActivity {
 
     private static final @IdRes int CIRCULAR_PROGRESS_MYFAVOURITES_ID = R.id.circular_progress_myfavourites;
     private static final @IdRes int TOOLBAR_MYFAVOURITES_ID = R.id.toolbar_myfavourites;
-    private static final @IdRes int IC_ARROW_BACK_WHITE_DRAWABLE = R.drawable.ic_arrow_back_white;
-    private static final @IdRes int WHITE_COLOR = R.color.white;
+    private static final @DrawableRes int IC_ARROW_BACK_WHITE_DRAWABLE = R.drawable.ic_arrow_back_white;
+    private static final @ColorRes int WHITE_COLOR = R.color.white;
     private static final @IdRes int MY_RECYCLER_VIEW_MYFAVOURITES_ID = R.id.my_recycler_view_myfavourites;
     private static final @IdRes int SWIPE_REFRESH_MYFAVOURITES_ID = R.id.swipe_refresh_myfavourites;
 

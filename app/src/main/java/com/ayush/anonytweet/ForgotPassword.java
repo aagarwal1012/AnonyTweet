@@ -50,6 +50,8 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        // getId() is an internal android function.
+        @SuppressWarnings("assignment.type.incompatible")
         @IdRes int id = view.getId();
         if (id == R.id.forgot_btn_back) {
             startActivity(new Intent(this, login.class));

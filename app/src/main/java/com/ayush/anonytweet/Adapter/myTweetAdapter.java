@@ -28,6 +28,7 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 
 import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,8 @@ import static android.content.ContentValues.TAG;
 public class myTweetAdapter extends RecyclerView.Adapter<myTweetAdapter.MyHolder> {
 
 
-    public static final @IdRes int ITEM_CARD_ID = R.layout.item_card;
+    public static final @LayoutRes int ITEM_CARD_ID = R.layout.item_card;
+
     public static final @IdRes int CARD_IMAGE_ID = R.id.card_image;
     public static final @IdRes int CARD_TEXT_ID = R.id.card_text;
     public static final @IdRes int LIKE_VIEW_ID = R.id.like_view;
