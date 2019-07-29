@@ -136,7 +136,6 @@ public class DashBoard extends AppCompatActivity {
 
                     // handle navigation
                     // getId() is an internal android function.
-                    @SuppressWarnings("assignment.type.incompatible")
                     @IdRes int id = menuItem.getItemId();
                     if (id == R.id.nav_change_password) {
                         startActivity(new Intent(DashBoard.this, changePassword.class));
@@ -285,7 +284,6 @@ public class DashBoard extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         // getId() is an internal android function.
-        @SuppressWarnings("assignment.type.incompatible")
         @IdRes int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_changePass) {
