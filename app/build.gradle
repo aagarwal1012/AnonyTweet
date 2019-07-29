@@ -24,6 +24,24 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        checkTypes {
+            javaCompileOptions.annotationProcessorOptions.
+                    classNames.add("org.checkerframework.checker.androidresource.AndroidResourceChecker")
+            // You can pass options like so:
+            // javaCompileOptions.annotationProcessorOptions.arguments.put("warns", "")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+configurations {
+    checkerFrameworkAnnotatedJDK {
+        description = 'a copy of JDK classes with Checker Framework type qualifers inserted'
     }
 }
 
@@ -38,33 +56,31 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //add libraries
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.google.firebase:firebase-auth:11.6.2'
-    compile 'com.google.android.gms:play-services-auth:11.6.2'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.google.firebase:firebase-storage:11.6.2'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.jd-alexander:LikeButton:0.2.3'
-    compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
-    compile 'com.firebaseui:firebase-ui:0.6.2'
-    compile 'com.github.hani-momanii:SuperNova-Emoji:1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.google.android.gms:play-services-auth:11.6.2'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.google.firebase:firebase-storage:11.6.2'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+    implementation 'com.firebaseui:firebase-ui:0.6.2'
+    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.0'
+
+    implementation files('C:/Users/Ayush/ayush_files/gsoc/the-checker-framework/checker-framework/checker/dist/checker-qual.jar')
+    annotationProcessor files('C:/Users/Ayush/ayush_files/gsoc/the-checker-framework/checker-framework/checker/dist/checker.jar')
+    checkerFrameworkAnnotatedJDK files('C:/Users/Ayush/ayush_files/gsoc/the-checker-framework/checker-framework/checker/dist/jdk8.jar')
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile).all { compile ->
+        if (compile.name.contains("CheckTypes")) {
+            compile.options.compilerArgs += [
+                    "-Xbootclasspath/p:${configurations.checkerFrameworkAnnotatedJDK.asPath}",
+                    "-Astubs=stub_files"
+            ]
+        }
+    }
+}
 
 apply plugin: 'com.google.gms.google-services'

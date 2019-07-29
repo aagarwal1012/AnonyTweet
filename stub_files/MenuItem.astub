@@ -1,0 +1,9 @@
+package android.view;
+
+import org.checkerframework.checker.androidresource.qual.*;
+
+public interface MenuItem {
+
+    @IdRes int getItemId();
+
+}

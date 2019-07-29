@@ -33,23 +33,26 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 
 public class login extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 9001;
 
-    private static final int ACTIVITY_LOGIN_LAYOUT = R.layout.activity_login;
+    private static final @LayoutRes int ACTIVITY_LOGIN_LAYOUT = R.layout.activity_login;
 
-    private static final int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
-    private static final int LOGIN_BTN_LOGIN_ID = R.id.login_btn_login;
-    private static final int LOGIN_EMAIL_ID = R.id.login_email;
-    private static final int LOGIN_PASSWORD_ID = R.id.login_password;
-    private static final int LOGIN_BTN_SIGNUP_ID = R.id.login_btn_signup;
-    private static final int LOGIN_BTN_FORGOT_PASSWORD_ID = R.id.login_btn_forgot_password;
-    private static final int ACTIVITY_MAIN_ID = R.id.activity_main;
-    private static final int GOOGLE_BUT_ID = R.id.googleBut;
-    private static final int FB_LOGIN_BUTTON_ID = R.id.fb_login_button;
+    private static final @IdRes int CIRCULAR_PROGRESS_ID = R.id.circular_progress;
+    private static final @IdRes int LOGIN_BTN_LOGIN_ID = R.id.login_btn_login;
+    private static final @IdRes int LOGIN_EMAIL_ID = R.id.login_email;
+    private static final @IdRes int LOGIN_PASSWORD_ID = R.id.login_password;
+    private static final @IdRes int LOGIN_BTN_SIGNUP_ID = R.id.login_btn_signup;
+    private static final @IdRes int LOGIN_BTN_FORGOT_PASSWORD_ID = R.id.login_btn_forgot_password;
+    private static final @IdRes int ACTIVITY_MAIN_ID = R.id.activity_main;
+    private static final @IdRes int GOOGLE_BUT_ID = R.id.googleBut;
+    private static final @IdRes int FB_LOGIN_BUTTON_ID = R.id.fb_login_button;
 
     private Button btnLogin;
     private EditText input_email;
@@ -204,7 +207,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
+        @IdRes int id = view.getId();
         if (id == LOGIN_BTN_FORGOT_PASSWORD_ID) {
             startActivity(new Intent(login.this, ForgotPassword.class));
             finish();

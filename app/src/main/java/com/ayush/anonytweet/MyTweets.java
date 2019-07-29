@@ -24,25 +24,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyTweets extends AppCompatActivity {
 
-    private static final int ACTIVITY_MY_TWEETS_LAYOUT = R.layout.activity_my_tweets;
+    private static final @LayoutRes int ACTIVITY_MY_TWEETS_LAYOUT = R.layout.activity_my_tweets;
 
-    private static final int CIRCULAR_PROGRESS_MYTWEETS_ID = R.id.circular_progress_mytweets;
-    private static final int TOOLBAR_MYTWEETS_ID = R.id.toolbar_mytweets;
-    private static final int MY_RECYCLER_VIEW_MYTWEETS_ID = R.id.my_recycler_view_mytweets;
-    private static final int SWIPE_REFRESH_MYTWEETS_ID = R.id.swipe_refresh_mytweets;
-
+    private static final @IdRes int CIRCULAR_PROGRESS_MYTWEETS_ID = R.id.circular_progress_mytweets;
+    private static final @IdRes int TOOLBAR_MYTWEETS_ID = R.id.toolbar_mytweets;
+    private static final @IdRes int MY_RECYCLER_VIEW_MYTWEETS_ID = R.id.my_recycler_view_mytweets;
+    private static final @IdRes int SWIPE_REFRESH_MYTWEETS_ID = R.id.swipe_refresh_mytweets;
+    private final List<User> list_user = new ArrayList<>();
+    private final List<usersLiked> list_usersLiked = new ArrayList<>();
     private RecyclerView recycle;
     private SwipeRefreshLayout refreshLayout;
     private ProgressBar circular_progress;
     private DatabaseReference mDatabaseReference;
-
-    private final List<User> list_user = new ArrayList<>();
-    private final List<usersLiked> list_usersLiked = new ArrayList<>();
 
     @Override
     public boolean onSupportNavigateUp() {

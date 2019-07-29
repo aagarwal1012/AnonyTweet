@@ -15,21 +15,24 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 public class myTweetDetail extends AppCompatActivity {
     private static final String EXTRA_POSITION = "position";
 
-    private static final int ACTIVITY_MY_TWEET_DETAIL_LAYOUT = R.layout.activity_my_tweet_detail;
-    private static final int DIALOGUE_LAYOUT = R.layout.dialogue;
+    private static final @LayoutRes int ACTIVITY_MY_TWEET_DETAIL_LAYOUT = R.layout.activity_my_tweet_detail;
+    private static final @LayoutRes int DIALOGUE_LAYOUT = R.layout.dialogue;
 
-    private static final int MY_TWEET_DETAIL_TOOLBAR_ID = R.id.my_tweet_detail_toolbar;
-    private static final int MY_TWEET_DETAIL_COLLAPSING_TOOLBAR_ID = R.id.my_tweet_detail_collapsing_toolbar;
-    private static final int MY_TWEET_DETAIL_VIEW_MESSAGE_ID = R.id.my_tweet_detail_view_message;
-    private static final int MY_TWEET_DETAIL_CIRCULAR_PROGRESS_DETAIL_ID = R.id.my_tweet_detail_circular_progress_detail;
-    private static final int MY_TWEET_DETAIL_IMAGE_ID = R.id.my_tweet_detail_image;
-    private static final int DELETE_TWEET_ID = R.id.delete_tweet;
-    private static final int MESSAGE_ID = R.id.message;
-    private static final int DIALOG_BUTTON_OK_ID = R.id.dialogButtonOK;
-    private static final int EDIT_TWEET_ID = R.id.edit_tweet;
+    private static final @IdRes int MY_TWEET_DETAIL_TOOLBAR_ID = R.id.my_tweet_detail_toolbar;
+    private static final @IdRes int MY_TWEET_DETAIL_COLLAPSING_TOOLBAR_ID = R.id.my_tweet_detail_collapsing_toolbar;
+    private static final @IdRes int MY_TWEET_DETAIL_VIEW_MESSAGE_ID = R.id.my_tweet_detail_view_message;
+    private static final @IdRes int MY_TWEET_DETAIL_CIRCULAR_PROGRESS_DETAIL_ID = R.id.my_tweet_detail_circular_progress_detail;
+    private static final @IdRes int MY_TWEET_DETAIL_IMAGE_ID = R.id.my_tweet_detail_image;
+    private static final @IdRes int DELETE_TWEET_ID = R.id.delete_tweet;
+    private static final @IdRes int MESSAGE_ID = R.id.message;
+    private static final @IdRes int DIALOG_BUTTON_OK_ID = R.id.dialogButtonOK;
+    private static final @IdRes int EDIT_TWEET_ID = R.id.edit_tweet;
 
     private Button deleteTweet;
     private String text, imagePath, tweetId;

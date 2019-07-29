@@ -8,13 +8,16 @@ import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
+import org.checkerframework.checker.androidresource.qual.ColorRes;
+import org.checkerframework.checker.androidresource.qual.DrawableRes;
+
 public class splashScreen extends AwesomeSplash {
 
-    private static final int LOGO_DRAWABLE = R.drawable.cutmypic3;
+    private static final @DrawableRes int LOGO_DRAWABLE = R.drawable.cutmypic3;
 
-    private static final int SPLASH_SCREEN_BACKGROUND_COLOR = R.color.splash_screen_background;
-    private static final int WHITE_COLOR = R.color.white;
-    private static final int FACEBOOK_BLUE_COLOR = R.color.com_facebook_blue;
+    private static final @ColorRes int SPLASH_SCREEN_BACKGROUND_COLOR = R.color.splash_screen_background;
+    private static final @ColorRes int WHITE_COLOR = R.color.white;
+    private static final @ColorRes int FACEBOOK_BLUE_COLOR = R.color.com_facebook_blue;
 
     @Override
     public void initSplash(ConfigSplash configSplash) {

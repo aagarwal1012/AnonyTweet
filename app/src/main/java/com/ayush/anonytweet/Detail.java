@@ -11,17 +11,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 public class Detail extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
 
-    private static final int ACTIVITY_DETAIL_LAYOUT = R.layout.activity_detail;
+    private static final @LayoutRes int ACTIVITY_DETAIL_LAYOUT = R.layout.activity_detail;
 
-    private static final int TOOLBAR_ID = R.id.toolbar;
-    private static final int COLLAPSING_TOOLBAR_ID = R.id.collapsing_toolbar;
-    private static final int VIEW_MESSAGE_ID = R.id.view_message;
-    private static final int CIRCULAR_PROGRESS_DETAIL_ID = R.id.circular_progress_detail;
-    private static final int IMAGE_ID = R.id.image;
+
+    private static final @IdRes int COLLAPSING_TOOLBAR_ID = R.id.collapsing_toolbar;
+    private static final @IdRes int TOOLBAR_ID = R.id.toolbar;
+    private static final @IdRes int VIEW_MESSAGE_ID = R.id.view_message;
+    private static final @IdRes int CIRCULAR_PROGRESS_DETAIL_ID = R.id.circular_progress_detail;
+    private static final @IdRes int IMAGE_ID = R.id.image;
 
     @Override
     public boolean onSupportNavigateUp() {

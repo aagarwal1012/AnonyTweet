@@ -13,17 +13,20 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import org.checkerframework.checker.androidresource.qual.IdRes;
+import org.checkerframework.checker.androidresource.qual.LayoutRes;
+
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int ACTIVITY_SIGN_UP_LAYOUT = R.layout.activity_sign_up;
+    private static final @LayoutRes int ACTIVITY_SIGN_UP_LAYOUT = R.layout.activity_sign_up;
 
-    private static final int SIGNUP_BTN_REGISTER_ID = R.id.signup_btn_register;
-    private static final int SIGNUP_BTN_LOGIN_ID = R.id.signup_btn_login;
-    private static final int SIGNUP_BTN_FORGOT_PASS_ID = R.id.signup_btn_forgot_pass;
-    private static final int SIGNUP_EMAIL_ID = R.id.signup_email;
-    private static final int SIGNUP_PASSWORD_ID = R.id.signup_password;
-    private static final int SIGNUP_NAME_ID = R.id.signup_name;
-    private static final int ACTIVITY_SIGN_UP_ID = R.id.activity_sign_up;
+    private static final @IdRes int SIGNUP_BTN_REGISTER_ID = R.id.signup_btn_register;
+    private static final @IdRes int SIGNUP_BTN_LOGIN_ID = R.id.signup_btn_login;
+    private static final @IdRes int SIGNUP_BTN_FORGOT_PASS_ID = R.id.signup_btn_forgot_pass;
+    private static final @IdRes int SIGNUP_EMAIL_ID = R.id.signup_email;
+    private static final @IdRes int SIGNUP_PASSWORD_ID = R.id.signup_password;
+    private static final @IdRes int SIGNUP_NAME_ID = R.id.signup_name;
+    private static final @IdRes int ACTIVITY_SIGN_UP_ID = R.id.activity_sign_up;
 
     private Button btnSignup;
     private TextView btnLogin;
