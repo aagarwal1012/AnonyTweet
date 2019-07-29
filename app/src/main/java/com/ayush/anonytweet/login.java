@@ -207,7 +207,6 @@ public class login extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        // getId() is an internal android function.
         @IdRes int id = view.getId();
         if (id == LOGIN_BTN_FORGOT_PASSWORD_ID) {
             startActivity(new Intent(login.this, ForgotPassword.class));

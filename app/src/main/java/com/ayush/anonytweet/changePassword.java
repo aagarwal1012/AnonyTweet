@@ -46,7 +46,6 @@ public class changePassword extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        // getId() is an internal android function.
         @IdRes int id = view.getId();
         if (id == BTN_CHANGE_PASS_ID)
             changePassword(input_new_password.getText().toString());
