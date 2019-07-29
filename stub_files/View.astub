@@ -1,0 +1,11 @@
+package android.view;
+
+import org.checkerframework.checker.androidresource.qual.*;
+
+class View implements Drawable.Callback, KeyEvent.Callback,
+        AccessibilityEventSource {
+
+    @IdRes int getId();
+
+}
+
